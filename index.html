@@ -281,52 +281,42 @@ z-index:9999;
 
 function startIdleTimer(){
   clearTimeout(idleTimer);
-
   idleTimer = setTimeout(() => {
     logout();
     showPopup();
-  }, 10 * 60 * 1000); // ⏰ 10 menit
+  }, 10 * 60 * 1000); // 10 menit
 }
 
-function resetIdleTimer(){
+function stopIdleTimer(){
   clearTimeout(idleTimer);
-  startIdleTimer();
 }
 window.onload = function(){
   toggleBB();
   loadObat();
 
-  let login = localStorage.getItem("login");
+  let isLogin = localStorage.getItem("login");
   let loginTime = localStorage.getItem("loginTime");
 
-  if(login === "true" && loginTime){
+  if(isLogin === "true" && loginTime){
     let now = new Date().getTime();
     let diff = now - loginTime;
 
-    let batas = 24 * 60 * 60 * 1000; // 24 jam
+    let batas = 24 * 60 * 60 * 1000;
 
     if(diff < batas){
       document.getElementById("login").style.display = "none";
-   } else {
-  localStorage.removeItem("login");
-  localStorage.removeItem("loginTime");
-
-  document.getElementById("login").style.display = "flex";
-
-  showPopup(); // 🔥 INI KUNCINYA
-}
+    } else {
+      localStorage.removeItem("login");
+      localStorage.removeItem("loginTime");
+      document.getElementById("login").style.display = "flex";
+      showPopup();
+    }
   }
 
-  // sessionStorage (tanpa remember)
   if(sessionStorage.getItem("login") === "true"){
-  document.getElementById("login").style.display = "none";
-
-  startIdleTimer();
-
-  document.addEventListener("click", resetIdleTimer);
-  document.addEventListener("keypress", resetIdleTimer);
-  document.addEventListener("mousemove", resetIdleTimer);
-  document.addEventListener("scroll", resetIdleTimer);
+    document.getElementById("login").style.display = "none";
+    startIdleTimer(); // 🔥 aktifkan lagi setelah refresh
+  }
 };
 
 const users = [
@@ -344,21 +334,15 @@ function login(){
 
   if(found){
 
-    let now = new Date().getTime(); // 🔥 ambil waktu sekarang
+    let now = new Date().getTime();
 
     if(remember){
       localStorage.setItem("login","true");
-      localStorage.setItem("loginTime", now); // 🔥 simpan waktu
-    else {
-  sessionStorage.setItem("login","true");
-
-  startIdleTimer();
-
-  document.addEventListener("click", resetIdleTimer);
-  document.addEventListener("keypress", resetIdleTimer);
-  document.addEventListener("mousemove", resetIdleTimer);
-  document.addEventListener("scroll", resetIdleTimer);
-}
+      localStorage.setItem("loginTime", now);
+    } else {
+      sessionStorage.setItem("login","true");
+      startIdleTimer(); // 🔥 hanya ini
+    }
 
     document.getElementById("login").style.display = "none";
 
@@ -370,7 +354,7 @@ function logout(){
   localStorage.removeItem("login");
   sessionStorage.removeItem("login");
 
-  clearTimeout(idleTimer);
+  stopIdleTimer(); // 🔥 penting
 
   document.getElementById("user").value = "";
   document.getElementById("pass").value = "";
