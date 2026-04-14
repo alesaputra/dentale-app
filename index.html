@@ -17,15 +17,14 @@
   --blue-main: #4AB3E6;
   --blue-dark: #3A9FD1;
 }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: 'Inter', Arial, sans-serif;
-  padding:15px;
   min-height:100vh;
   background: radial-gradient(circle at 20% 30%, #38bdf8 0%, transparent 40%),
               radial-gradient(circle at 80% 70%, #6366f1 0%, transparent 40%),
               linear-gradient(135deg, #0f172a, #1e3a8a);
   background-attachment: fixed;
-  margin: 0;
 }
 
 /* ====== LOGIN SCREEN ====== */
@@ -42,10 +41,7 @@ body {
   transition: opacity 0.5s ease, visibility 0.5s;
 }
 
-#login.fade-out {
-  opacity: 0;
-  visibility: hidden;
-}
+#login.fade-out { opacity: 0; visibility: hidden; }
 
 .login-card {
   background: #FFFFFF;
@@ -58,14 +54,15 @@ body {
   transition: transform 0.4s ease;
 }
 
-.login-card.success {
-  transform: scale(0.95);
-}
+.login-card.success { transform: scale(0.95); }
 
 .logo {
   width: 48px;
   height: 48px;
   margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-card h2 {
@@ -90,16 +87,10 @@ body {
   color: #334155;
   outline: none;
   transition: all 0.2s ease;
-  box-sizing: border-box;
 }
 
 .login-input::placeholder { color: #64748B; }
-
-.login-input:hover {
-  background: #E0F2FE;
-  transform: translateY(-1px);
-}
-
+.login-input:hover { background: #E0F2FE; transform: translateY(-1px); }
 .login-input:focus {
   background: #FFFFFF;
   border-color: var(--blue-main);
@@ -117,9 +108,7 @@ body {
   transition: fill 0.2s;
 }
 
-.login-input:focus ~.input-icon {
-  fill: var(--blue-main);
-}
+.login-input:focus ~.input-icon { fill: var(--blue-main); }
 
 .remember-box {
   width: 100%;
@@ -132,20 +121,15 @@ body {
   gap: 10px;
   justify-content: flex-start;
   transition: background 0.2s;
-  box-sizing: border-box;
 }
 
-.remember-box:hover {
-  background: #E0F2FE;
-}
-
+.remember-box:hover { background: #E0F2FE; }
 .remember-box input[type="checkbox"] {
   width: 18px;
   height: 18px;
   accent-color: var(--blue-main);
   cursor: pointer;
 }
-
 .remember-box label {
   font-size: 14px;
   color: #334155;
@@ -172,10 +156,7 @@ body {
   box-shadow: 0 6px 20px rgba(74, 179, 230, 0.3);
 }
 
-.btn-masuk:active {
-  transform: translateY(0px);
-}
-
+.btn-masuk:active { transform: translateY(0px); }
 #error {
   color: #ef4444;
   font-size: 14px;
@@ -199,17 +180,8 @@ body {
   opacity: 0;
 }
 
-.success-check.show {
-  animation: popIn 0.5s ease forwards;
-}
-
-.success-check svg {
-  width: 40px;
-  height: 40px;
-  stroke: white;
-  stroke-width: 3;
-  fill: none;
-}
+.success-check.show { animation: popIn 0.5s ease forwards; }
+.success-check svg { width: 40px; height: 40px; stroke: white; stroke-width: 3; fill: none; }
 
 @keyframes popIn {
   0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
@@ -228,23 +200,65 @@ body {
   max-width:520px;
   margin:auto;
   color:white;
+  padding:20px;
+  padding-top: 0;
+}
+
+/* HEADER BARU */
+.app-header {
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(12px);
-  padding:20px;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  padding: 16px 20px;
+  border-radius: 0 0 20px 20px;
+  margin: 0 -20px 20px -20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.app-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 2px;
+}
+
+.app-header p {
+  font-size: 12px;
+  color: #cbd5f5;
+  opacity: 0.8;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--blue-main);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+
 .form-box {
   background: rgba(255,255,255,0.12);
   backdrop-filter: blur(12px);
   padding: var(--space-lg);
   border-radius:16px;
-  margin-top:15px;
+  margin-bottom: 15px;
 }
-h2 {
-  text-align:center;
-  color:white;
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+
 select,input:not(.login-input) {
   width:100%;
   padding:14px;
@@ -255,9 +269,9 @@ select,input:not(.login-input) {
   outline:none;
   background: rgba(255,255,255,0.95);
   box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
-  box-sizing: border-box;
 }
-button:not(.btn-masuk):not(.logout-btn) {
+
+.btn-primary {
   width:100%;
   padding:14px;
   margin-top:10px;
@@ -270,11 +284,70 @@ button:not(.btn-masuk):not(.logout-btn) {
   cursor:pointer;
   transition: all 0.2s ease;
 }
-button:hover:not(.btn-masuk):not(.logout-btn) {
-  transform: scale(1.05);
+
+.btn-primary:hover {
+  transform: scale(1.02);
   box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
-button:active { transform: scale(0.97); }
+
+.quick-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  padding: 10px 16px;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  background: white;
+  color: #1E293B;
+  font-weight: 600;
+}
+
+.tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active { display: block; }
+
 .card {
   background: rgba(255,255,255,0.9);
   backdrop-filter: blur(6px);
@@ -283,46 +356,37 @@ button:active { transform: scale(0.97); }
   margin-top:10px;
   box-shadow:0 4px 15px rgba(0,0,0,0.2);
   color:#111;
-  animation: slideUp 0.4s ease;
 }
+
 .blue{border-left:6px solid #007bff;}
 .green{border-left:6px solid #28a745;}
 .red{border-left:6px solid #dc3545;}
 .orange{border-left:6px solid orange;}
 .hidden{display:none;}
-pre{white-space:pre-wrap;}
+pre{white-space:pre-wrap; font-family: inherit;}
 label {
   font-size:13px;
   margin-top:10px;
   display:block;
   color:#e2e8f0;
 }
+
 .logout-btn {
-  position:absolute;
-  top:15px;
-  right:15px;
   background:#ef4444;
   color:white;
   padding:6px 12px;
   border:none;
   border-radius:8px;
   font-size:12px;
-  width:auto;
   cursor:pointer;
 }
+
 .logout-btn:hover { background:#dc2626; }
 .form-group { margin-bottom: var(--space-md); }
-#out { margin-top: var(--space-lg); }
 
-@keyframes slideUp {
-  from { opacity:0; transform:translateY(15px); }
-  to { opacity:1; transform:translateY(0); }
-}
-
-@media (max-width: 768px) {
-.container { max-width:90%; }
-  body { padding:10px; }
-  h2 { font-size:18px; }
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(8px);}
+  to {opacity:1; transform:translateY(0);}
 }
 
 #popup {
@@ -342,9 +406,32 @@ label {
   width:280px;
   animation: fadeIn 0.3s ease;
 }
-@keyframes fadeIn {
-  from {opacity:0; transform:scale(0.8);}
-  to {opacity:1; transform:scale(1);}
+
+.history-item {
+  background: rgba(255,255,255,0.1);
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.history-item:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.history-item h4 {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.history-item p {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+ .container { padding: 15px; padding-top: 0; }
 }
 </style>
 </head>
@@ -355,10 +442,7 @@ label {
 <div id="login">
   <div class="login-card" id="loginCard">
     <div class="logo">
-      <!-- LOGO GIGI YANG UDAH BENER -->
-      <svg viewBox="0 0 24 24" fill="#4AB3E6">
-        <path d="M12 2c-3.3 0-6 2.2-6 5c0 1.7 3.1 1.7 4.1c1.9 1.8 2.3 1.8 3.9c0 2.1 1 3.5 3.5s3.5-1.4 3.5-3.5c0-1.6.8-3 1.8-3.9c1-1 1.7-2.4 1.7-4.1c0-2.8-2.7-5-6-5z"/>
-      </svg>
+      <div style="font-size: 42px; line-height: 1;">🦷</div>
     </div>
     
     <h2>Dental App</h2>
@@ -366,7 +450,7 @@ label {
     <div class="login-input-group">
       <input type="text" id="user" class="login-input" placeholder="Username">
       <svg class="input-icon" viewBox="0 0 24 24">
-        <path d="M12 1C8.962 1 6.5 3.462 6.5 6.5C6.5 9.538 8.962 12 12 12C15.038 12 17.5 9.538 17.5 6.5C17.5 3.462 15.038 1 12 1ZM12 14C7.582 14 4 17.582 4 22H20C20 17.582 16.418 14 12 14Z"/>
+        <path d="M12 1C8.962 1 6.5 3.462 6.5C6.5 9.538 8.962 12 12 12C15.038 12 17.5 9.538 17.5 6.5C17.5 3.462 15.038 1 12 1ZM12 14C7.582 14 4 17.582 4 22H20C20 17.582 16.418 14 12 14Z"/>
       </svg>
     </div>
     
@@ -395,38 +479,59 @@ label {
 
 <!-- APP UTAMA -->
 <div class="container">
-<h2 style="letter-spacing:1px;">🦷 Dentale Smart Resep</h2>
-<p style="text-align:center; font-size:12px; opacity:0.7;">
-  Sistem bantu resep cepat & praktis
-</p>
+  <!-- HEADER BARU -->
+  <div class="app-header">
+    <div>
+      <h3 id="greeting">Halo, Dokter 👋</h3>
+      <p id="todayDate">Senin, 14 April 2026</p>
+    </div>
+    <div class="avatar" id="avatar">D</div>
+  </div>
+
+  <!-- FORM -->
   <div class="form-box">
-<div style="display:flex; justify-content:flex-end;">
-  <button class="logout-btn" onclick="logout()">Logout</button>
-</div>
-<label>Mode Pasien</label>
-<select id="mode" onchange="toggleBB()">
-<option value="dewasa">Dewasa</option>
-<option value="anak">Anak</option>
-</select>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+      <div class="section-title">🦷 Buat Resep</div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    
+    <label>Mode Pasien</label>
+    <select id="mode" onchange="toggleBB()">
+      <option value="dewasa">Dewasa</option>
+      <option value="anak">Anak</option>
+    </select>
 
-<div class="form-group">
-  <label>Berat Badan (Mode Pasien Anak)</label>
-  <input id="bb" class="hidden" placeholder="Contoh: 20 (Kg)">
-</div>
+    <div class="form-group">
+      <label>Berat Badan (Mode Pasien Anak)</label>
+      <input id="bb" class="hidden" placeholder="Contoh: 20 (Kg)">
+    </div>
 
-<label>Kategori Obat</label>
-<select id="kategori">
-<option value="analgesik">Analgesik</option>
-<option value="antibiotik">Antibiotik</option>
-<option value="lain">Lain-lain</option>
-</select>
+    <label>Kategori Obat</label>
+    <select id="kategori">
+      <option value="analgesik">Analgesik</option>
+      <option value="antibiotik">Antibiotik</option>
+      <option value="lain">Lain-lain</option>
+    </select>
 
-<label>Pilih Obat</label>
-<select id="obat"></select>
+    <label>Pilih Obat</label>
+    <select id="obat"></select>
 
-<button onclick="run()">PROSES</button>
+    <button onclick="run()" class="btn-primary">PROSES</button>
+    
+    <div class="quick-actions">
+      <button class="btn-secondary" onclick="copyResep()">📋 Salin Resep</button>
+      <button class="btn-secondary" onclick="resetForm()">🔄 Reset</button>
+    </div>
+  </div>
 
-<div id="out"></div>
+  <!-- OUTPUT TABS -->
+  <div id="out"></div>
+  
+  <!-- RIWAYAT -->
+  <div class="form-box" id="historyBox" style="display:none;">
+    <div class="section-title">📜 Riwayat Terakhir</div>
+    <div id="historyList"></div>
+  </div>
 </div>
 
 <div id="popup">
@@ -444,78 +549,174 @@ antibiotik: ["Amoxicillin","Amoxiclav","Cefadroxil","Cefixime","Clindamycin","Me
 lain: ["Metylprednisolone","Omeprazole"]
 };
 
+let currentResep = "";
+let currentUser = "";
+
+// SET TANGGAL OTOMATIS
+function setDate() {
+  const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const d = new Date();
+  document.getElementById('todayDate').innerText = `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
 function toggleBB(){
-let mode=document.getElementById("mode").value;
-let bb=document.getElementById("bb");
-mode=="anak"? bb.classList.remove("hidden") : bb.classList.add("hidden");
+  let mode=document.getElementById("mode").value;
+  let bb=document.getElementById("bb");
+  mode=="anak"? bb.classList.remove("hidden") : bb.classList.add("hidden");
 }
 
 function loadObat(){
-let kat=document.getElementById("kategori").value;
-let select=document.getElementById("obat");
-select.innerHTML="";
-data[kat].forEach(o=>{
-let opt=document.createElement("option");
-opt.text=o;
-select.add(opt);
-});
+  let kat=document.getElementById("kategori").value;
+  let select=document.getElementById("obat");
+  select.innerHTML="";
+  data[kat].forEach(o=>{
+    let opt=document.createElement("option");
+    opt.text=o;
+    select.add(opt);
+  });
 }
 
 document.getElementById("kategori").addEventListener("change",loadObat);
 
 function run(){
-let mode=document.getElementById("mode").value;
-let bb=parseFloat(document.getElementById("bb").value || 0);
-let obat=document.getElementById("obat").value;
-let dosis="",resep="",indikasi="",kontra="",merk="",kie="";
+  let mode=document.getElementById("mode").value;
+  let bb=parseFloat(document.getElementById("bb").value || 0);
+  let obat=document.getElementById("obat").value;
+  let dosis="",resep="",indikasi="",kontra="",merk="",kie="";
 
-const dewasa = {
-"Paracetamol":["500 mg 3-4x","R/ Paracetamol 500 mg\nS: 3 dd 1","Nyeri ringan","Hati","Sanmol","Boleh sebelum/sesudah makan"],
-"Ibuprofen":["400 mg 3x","R/ Ibuprofen 400 mg\nS: 3 dd 1 p.c","Inflamasi","Gastritis","Proris","Setelah makan"],
-"Mefenamic Acid":["500 mg 3x","R/ Mefenamic acid 500 mg\nS: 3 dd 1","Nyeri sedang","Gastritis","Ponstan","Jangan saat perut kosong"],
-"Diclofenac K":["50 mg 2-3x","R/ Diclofenac K 50 mg\nS: 2 dd 1","Nyeri kuat","Ulkus","Cataflam","Setelah makan"],
-"Ketorolac":["10 mg 3x","R/ Ketorolac 10 mg\nS: 3 dd 1","Nyeri berat","Ginjal","Toradol","Max 5 hari"],
-"Tramadol":["50 mg 2-3x","R/ Tramadol 50 mg\nS: 2 dd 1","Nyeri berat","Ketergantungan","Tramal","Mengantuk"],
-"Amoxicillin":["500 mg 3x","R/ Amoxicillin 500 mg\nS: 3 dd 1","Infeksi","Alergi","Amoxil","Habiskan"],
-"Amoxiclav":["625 mg 3x","R/ Amoxiclav 625 mg\nS: 3 dd 1","Infeksi berat","Alergi","Augmentin","Setelah makan"],
-"Cefadroxil":["500 mg 2x","R/ Cefadroxil 500 mg\nS: 2 dd 1","Infeksi","Alergi","Duricef","Habiskan"],
-"Cefixime":["200 mg 2x","R/ Cefixime 200 mg\nS: 2 dd 1","Infeksi berat","Alergi","Suprax","Habiskan"],
-"Clindamycin":["300 mg 3x","R/ Clindamycin 300 mg\nS: 3 dd 1","Alergi penisilin","Diare","Dalacin","Stop jika diare"],
-"Metronidazole":["500 mg 3x","R/ Metronidazole 500 mg\nS: 3 dd 1","Anaerob","Alkohol","Flagyl","Tidak boleh alkohol"],
-"Azithromycin":["500 mg 1x","R/ Azithromycin 500 mg\nS: 1 dd 1","Alternatif","Hati","Zithromax","Sebelum makan"],
-"Metylprednisolone":["4 mg 3x","R/ Metylprednisolone 4 mg\nS: 3 dd 1","Inflamasi","Infeksi aktif","Medrol","Jangka pendek"],
-"Omeprazole":["20 mg 1x","R/ Omeprazole 20 mg\nS: 1 dd 1 a.c","Gastritis","Hipersensitif","Losec","Sebelum makan"]
-};
+  const dewasa = {
+    "Paracetamol":["500 mg 3-4x","R/ Paracetamol 500 mg\nS: 3 dd 1","Nyeri ringan","Hati","Sanmol","Boleh sebelum/sesudah makan"],
+    "Ibuprofen":["400 mg 3x","R/ Ibuprofen 400 mg\nS: 3 dd 1 p.c","Inflamasi","Gastritis","Proris","Setelah makan"],
+    "Mefenamic Acid":["500 mg 3x","R/ Mefenamic acid 500 mg\nS: 3 dd 1","Nyeri sedang","Gastritis","Ponstan","Jangan saat perut kosong"],
+    "Diclofenac K":["50 mg 2-3x","R/ Diclofenac K 50 mg\nS: 2 dd 1","Nyeri kuat","Ulkus","Cataflam","Setelah makan"],
+    "Ketorolac":["10 mg 3x","R/ Ketorolac 10 mg\nS: 3 dd 1","Nyeri berat","Ginjal","Toradol","Max 5 hari"],
+    "Tramadol":["50 mg 2-3x","R/ Tramadol 50 mg\nS: 2 dd 1","Nyeri berat","Ketergantungan","Tramal","Mengantuk"],
+    "Amoxicillin":["500 mg 3x","R/ Amoxicillin 500 mg\nS: 3 dd 1","Infeksi","Alergi","Amoxil","Habiskan"],
+    "Amoxiclav":["625 mg 3x","R/ Amoxiclav 625 mg\nS: 3 dd 1","Infeksi berat","Alergi","Augmentin","Setelah makan"],
+    "Cefadroxil":["500 mg 2x","R/ Cefadroxil 500 mg\nS: 2 dd 1","Infeksi","Alergi","Duricef","Habiskan"],
+    "Cefixime":["200 mg 2x","R/ Cefixime 200 mg\nS: 2 dd 1","Infeksi berat","Alergi","Suprax","Habiskan"],
+    "Clindamycin":["300 mg 3x","R/ Clindamycin 300 mg\nS: 3 dd 1","Alergi penisilin","Diare","Dalacin","Stop jika diare"],
+    "Metronidazole":["500 mg 3x","R/ Metronidazole 500 mg\nS: 3 dd 1","Anaerob","Alkohol","Flagyl","Tidak boleh alkohol"],
+    "Azithromycin":["500 mg 1x","R/ Azithromycin 500 mg\nS: 1 dd 1","Alternatif","Hati","Zithromax","Sebelum makan"],
+    "Metylprednisolone":["4 mg 3x","R/ Metylprednisolone 4 mg\nS: 3 dd 1","Inflamasi","Infeksi aktif","Medrol","Jangka pendek"],
+    "Omeprazole":["20 mg 1x","R/ Omeprazole 20 mg\nS: 1 dd 1 a.c","Gastritis","Hipersensitif","Losec","Sebelum makan"]
+  };
 
-const maxBB = 40;
-if(mode=="anak" && bb>0){
-let w = bb>maxBB? maxBB : bb;
-let over = bb>maxBB;
-const anak = {
-"Paracetamol":[(w*0.5).toFixed(1)+" mL","R/ Paracetamol syr\nS: 3 dd "+(w*0.5).toFixed(1)+" mL","Demam","Hati","Sanmol Syr",""],
-"Ibuprofen":[(w*0.25).toFixed(1)+" mL","R/ Ibuprofen syr\nS: 3 dd "+(w*0.25).toFixed(1)+" mL","Nyeri","Gastritis","Proris Syr","Setelah makan"],
-"Amoxicillin":[(w*0.4).toFixed(1)+" mL","R/ Amoxicillin syr\nS: 3 dd "+(w*0.4).toFixed(1)+" mL","Infeksi","Alergi","Amoxil Syr","Habiskan"],
-"Cefadroxil":[(w*0.6).toFixed(1)+" mL","R/ Cefadroxil syr\nS: 2 dd "+(w*0.6).toFixed(1)+" mL","Infeksi","Alergi","Duricef Syr","Habiskan"],
-"Metronidazole":[(w*0.3).toFixed(1)+" mL","R/ Metronidazole syr\nS: 3 dd "+(w*0.3).toFixed(1)+" mL","Anaerob","Alkohol","Flagyl Syr","Hindari alkohol"]
-};
-if(anak){
-[dosis,resep,indikasi,kontra,merk,kie]=anak;
-if(over) kie="BB > 40 kg → gunakan dosis maksimal anak";
-}else{
-dosis="-"; resep="-"; indikasi="-"; kontra="-"; merk="-"; kie="Tidak dianjurkan untuk anak";
+  const maxBB = 40;
+  if(mode=="anak" && bb>0){
+    let w = bb>maxBB? maxBB : bb;
+    let over = bb>maxBB;
+    const anak = {
+      "Paracetamol":[(w*0.5).toFixed(1)+" mL","R/ Paracetamol syr\nS: 3 dd "+(w*0.5).toFixed(1)+" mL","Demam","Hati","Sanmol Syr",""],
+      "Ibuprofen":[(w*0.25).toFixed(1)+" mL","R/ Ibuprofen syr\nS: 3 dd "+(w*0.25).toFixed(1)+" mL","Nyeri","Gastritis","Proris Syr","Setelah makan"],
+      "Amoxicillin":[(w*0.4).toFixed(1)+" mL","R/ Amoxicillin syr\nS: 3 dd "+(w*0.4).toFixed(1)+" mL","Infeksi","Alergi","Amoxil Syr","Habiskan"],
+      "Cefadroxil":[(w*0.6).toFixed(1)+" mL","R/ Cefadroxil syr\nS: 2 dd "+(w*0.6).toFixed(1)+" mL","Infeksi","Alergi","Duricef Syr","Habiskan"],
+      "Metronidazole":[(w*0.3).toFixed(1)+" mL","R/ Metronidazole syr\nS: 3 dd "+(w*0.3).toFixed(1)+" mL","Anaerob","Alkohol","Flagyl Syr","Hindari alkohol"]
+    };
+    if(anak){
+      [dosis,resep,indikasi,kontra,merk,kie]=anak;
+      if(over) kie="BB > 40 kg → gunakan dosis maksimal anak";
+    }else{
+      dosis="-"; resep="-"; indikasi="-"; kontra="-"; merk="-"; kie="Tidak dianjurkan untuk anak";
+    }
+  }
+  if(mode=="dewasa" && dewasa){
+    [dosis,resep,indikasi,kontra,merk,kie]=dewasa;
+  }
+  
+  currentResep = resep;
+  saveToHistory(obat, dosis, resep);
+  
+  document.getElementById("out").innerHTML=`
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('dosis')">Dosis</button>
+    <button class="tab-btn" onclick="showTab('resep')">Resep</button>
+    <button class="tab-btn" onclick="showTab('kie')">KIE</button>
+    <button class="tab-btn" onclick="showTab('info')">Info</button>
+  </div>
+  
+  <div id="tab-dosis" class="tab-content active">
+    <div class="card blue"><b>Dosis:</b><br>${dosis}</div>
+  </div>
+  
+  <div id="tab-resep" class="tab-content">
+    <div class="card green"><b>Resep:</b><pre>${resep}</pre></div>
+  </div>
+  
+  <div id="tab-kie" class="tab-content">
+    <div class="card orange"><b>NB (KIE):</b><br>${kie}</div>
+  </div>
+  
+  <div id="tab-info" class="tab-content">
+    <div class="card green"><b>Indikasi:</b><br>${indikasi}</div>
+    <div class="card red"><b>Kontraindikasi:</b><br>${kontra}</div>
+    <div class="card blue"><b>Merk:</b><br>${merk}</div>
+  </div>
+  `;
 }
+
+function showTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  document.getElementById('tab-' + tabName).classList.add('active');
+  event.target.classList.add('active');
 }
-if(mode=="dewasa" && dewasa){
-[dosis,resep,indikasi,kontra,merk,kie]=dewasa;
+
+function copyResep() {
+  if(!currentResep) {
+    alert('Belum ada resep. Klik PROSES dulu.');
+    return;
+  }
+  navigator.clipboard.writeText(currentResep);
+  event.target.innerText = '✅ Tersalin!';
+  setTimeout(() => {
+    event.target.innerText = '📋 Salin Resep';
+  }, 2000);
 }
-document.getElementById("out").innerHTML=`
-<div class="card blue"><b>Dosis:</b><br>${dosis}</div>
-<div class="card green"><b>Resep:</b><pre>${resep}</pre></div>
-<div class="card green"><b>Indikasi:</b><br>${indikasi}</div>
-<div class="card red"><b>Kontraindikasi:</b><br>${kontra}</div>
-<div class="card orange"><b>Merk:</b><br>${merk}</div>
-<div class="card blue"><b>NB (KIE):</b><br>${kie}</div>
-`;
+
+function resetForm() {
+  document.getElementById("bb").value = "";
+  document.getElementById("out").innerHTML = "";
+  currentResep = "";
+}
+
+function saveToHistory(obat, dosis, resep) {
+  let history = JSON.parse(localStorage.getItem('resepHistory') || '[]');
+  history.unshift({
+    obat: obat,
+    dosis: dosis,
+    resep: resep,
+    time: new Date().toLocaleString('id-ID')
+  });
+  history = history.slice(0, 5); // Simpen 5 terakhir
+  localStorage.setItem('resepHistory', JSON.stringify(history));
+  loadHistory();
+}
+
+function loadHistory() {
+  let history = JSON.parse(localStorage.getItem('resepHistory') || '[]');
+  if(history.length === 0) {
+    document.getElementById('historyBox').style.display = 'none';
+    return;
+  }
+  
+  document.getElementById('historyBox').style.display = 'block';
+  let html = '';
+  history.forEach(item => {
+    html += `
+    <div class="history-item" onclick="alert('${item.resep.replace(/\n/g, '\\n')}')">
+      <h4>${item.obat}</h4>
+      <p>${item.dosis} • ${item.time}</p>
+    </div>
+    `;
+  });
+  document.getElementById('historyList').innerHTML = html;
 }
 
 let idleTimer;
@@ -527,9 +728,13 @@ function startIdleTimer(){
   }, 10 * 60 * 1000);
 }
 function stopIdleTimer(){ clearTimeout(idleTimer); }
+
 window.onload = function(){
+  setDate();
   toggleBB();
   loadObat();
+  loadHistory();
+  
   let isLogin = localStorage.getItem("login");
   let loginTime = localStorage.getItem("loginTime");
   if(isLogin === "true" && loginTime){
@@ -538,6 +743,9 @@ window.onload = function(){
     let batas = 24 * 60 * 60 * 1000;
     if(diff < batas){
       document.getElementById("login").style.display = "none";
+      currentUser = localStorage.getItem("username") || "Dokter";
+      document.getElementById("greeting").innerText = `Halo, ${currentUser} 👋`;
+      document.getElementById("avatar").innerText = currentUser.charAt(0).toUpperCase();
     } else {
       localStorage.removeItem("login");
       localStorage.removeItem("loginTime");
@@ -550,10 +758,11 @@ window.onload = function(){
     startIdleTimer();
   }
 };
+
 const users = [
-  {username: "dokter", password: "dokter24"},
-  {username: "admin", password: "klinik24"},
-  {username: "asisten", password: "babu24"}
+  {username: "dokter", password: "dokter24", name: "Dokter"},
+  {username: "admin", password: "klinik24", name: "Admin"},
+  {username: "asisten", password: "babu24", name: "Asisten"}
 ];
 
 function login(){
@@ -563,6 +772,11 @@ function login(){
   let found = users.find(u => u.username === user && u.password === pass);
   
   if(found){
+    currentUser = found.name;
+    localStorage.setItem("username", currentUser);
+    document.getElementById("greeting").innerText = `Halo, ${currentUser} 👋`;
+    document.getElementById("avatar").innerText = currentUser.charAt(0).toUpperCase();
+    
     document.getElementById("loginCard").classList.add("success");
     document.getElementById("successCheck").classList.add("show");
     
@@ -591,18 +805,3 @@ function login(){
 }
 
 function logout(){
-  localStorage.removeItem("login");
-  sessionStorage.removeItem("login");
-  stopIdleTimer();
-  document.getElementById("user").value = "";
-  document.getElementById("pass").value = "";
-  document.getElementById("login").style.display = "flex";
-  document.getElementById("login").classList.remove("fade-out");
-  document.getElementById("loginCard").classList.remove("success");
-  document.getElementById("successCheck").classList.remove("show");
-}
-function showPopup(){ document.getElementById("popup").style.display = "flex"; }
-function closePopup(){ document.getElementById("popup").style.display = "none"; }
-</script>
-</body>
-</html>
