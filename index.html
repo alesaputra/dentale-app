@@ -125,6 +125,20 @@ label {
   from {opacity:0; transform:scale(0.8);}
   to {opacity:1; transform:scale(1);}
 }
+  .card {
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity:0;
+    transform:translateY(15px);
+  }
+  to {
+    opacity:1;
+    transform:translateY(0);
+  }
+}
 </style>
 </head>
 
@@ -188,7 +202,10 @@ Masuk
 </div>
 
 <div class="container">
-<h2>🦷 Dentale Resep</h2>
+<h2 style="letter-spacing:1px;">🦷 Dentale Smart Resep</h2>
+<p style="text-align:center; font-size:12px; opacity:0.7;">
+  Sistem bantu resep cepat & praktis
+</p>
   <div class="form-box">
 <button class="logout-btn" onclick="logout()">Logout</button>
 <label>Mode Pasien</label>
