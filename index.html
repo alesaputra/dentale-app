@@ -277,6 +277,21 @@ z-index:9999;
 </div>
 
 <script>
+  let idleTimer;
+
+function startIdleTimer(){
+  clearTimeout(idleTimer);
+
+  idleTimer = setTimeout(() => {
+    logout();
+    showPopup();
+  }, 10 * 60 * 1000); // ⏰ 10 menit
+}
+
+function resetIdleTimer(){
+  clearTimeout(idleTimer);
+  startIdleTimer();
+}
 window.onload = function(){
   toggleBB();
   loadObat();
@@ -304,8 +319,14 @@ window.onload = function(){
 
   // sessionStorage (tanpa remember)
   if(sessionStorage.getItem("login") === "true"){
-    document.getElementById("login").style.display = "none";
-  }
+  document.getElementById("login").style.display = "none";
+
+  startIdleTimer();
+
+  document.addEventListener("click", resetIdleTimer);
+  document.addEventListener("keypress", resetIdleTimer);
+  document.addEventListener("mousemove", resetIdleTimer);
+  document.addEventListener("scroll", resetIdleTimer);
 };
 
 const users = [
@@ -328,9 +349,16 @@ function login(){
     if(remember){
       localStorage.setItem("login","true");
       localStorage.setItem("loginTime", now); // 🔥 simpan waktu
-    } else {
-      sessionStorage.setItem("login","true");
-    }
+    else {
+  sessionStorage.setItem("login","true");
+
+  startIdleTimer();
+
+  document.addEventListener("click", resetIdleTimer);
+  document.addEventListener("keypress", resetIdleTimer);
+  document.addEventListener("mousemove", resetIdleTimer);
+  document.addEventListener("scroll", resetIdleTimer);
+}
 
     document.getElementById("login").style.display = "none";
 
@@ -341,6 +369,8 @@ function login(){
 function logout(){
   localStorage.removeItem("login");
   sessionStorage.removeItem("login");
+
+  clearTimeout(idleTimer);
 
   document.getElementById("user").value = "";
   document.getElementById("pass").value = "";
