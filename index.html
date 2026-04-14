@@ -53,6 +53,10 @@ style="padding:12px;margin:10px;border-radius:10px;border:none;width:220px;">
 <input type="password" id="pass" placeholder="Password"
 style="padding:12px;margin:10px;border-radius:10px;border:none;width:220px;">
 
+<label style="font-size:13px;">
+  <input type="checkbox" id="remember"> Ingat saya
+</label>
+  
 <div id="error" style="color:red;"></div>
 <button onclick="login()" style="
 margin-top:12px;
@@ -202,9 +206,12 @@ window.onload = function(){
   loadObat();
 
   // AUTO LOGIN
-  if(localStorage.getItem("login") === "true"){
-    document.getElementById("login").style.display = "none";
-  }
+ if(
+  localStorage.getItem("login") === "true" ||
+  sessionStorage.getItem("login") === "true"
+){
+  document.getElementById("login").style.display = "none";
+}
 };
 
 const users = [
@@ -216,12 +223,20 @@ const users = [
 function login(){
   let user = document.getElementById("user").value;
   let pass = document.getElementById("pass").value;
+  let remember = document.getElementById("remember").checked;
 
   let found = users.find(u => u.username === user && u.password === pass);
 
   if(found){
-    localStorage.setItem("login","true"); // 🔥 INI KUNCI
+
+    if(remember){
+      localStorage.setItem("login","true"); // permanen
+    } else {
+      sessionStorage.setItem("login","true"); // sementara
+    }
+
     document.getElementById("login").style.display = "none";
+
   } else {
     document.getElementById("error").innerText = "Username atau password salah!";
   }
