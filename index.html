@@ -75,6 +75,12 @@ button:active {
 .orange{border-left:6px solid orange;}
 .hidden{display:none;}
 pre{white-space:pre-wrap;}
+label {
+  font-size:13px;
+  margin-top:10px;
+  display:block;
+  color:#e2e8f0;
+}
 #popup div {
   animation: fadeIn 0.3s ease;
 }
@@ -160,19 +166,23 @@ z-index:1000;
 ">
 Logout
 </button>
+<label>Mode Pasien</label>
 <select id="mode" onchange="toggleBB()">
 <option value="dewasa">Dewasa</option>
 <option value="anak">Anak</option>
 </select>
 
-<input id="bb" class="hidden" placeholder="Berat badan anak (kg)">
+<label>Berat Badan (kg)</label>
+<input id="bb" class="hidden" placeholder="Contoh: 20">
 
+<label>Kategori Obat</label>
 <select id="kategori">
 <option value="analgesik">Analgesik</option>
 <option value="antibiotik">Antibiotik</option>
 <option value="lain">Lain-lain</option>
 </select>
 
+<label>Pilih Obat</label>
 <select id="obat"></select>
 
 <button onclick="run()">PROSES</button>
