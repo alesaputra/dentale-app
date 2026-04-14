@@ -288,7 +288,7 @@ window.onload = function(){
     let now = new Date().getTime();
     let diff = now - loginTime;
 
-    let batas = 1 * 60 * 1000; // 1 menit
+    let batas = 24 * 60 * 60 * 1000; // 24 jam
 
     if(diff < batas){
       document.getElementById("login").style.display = "none";
