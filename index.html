@@ -277,6 +277,18 @@ z-index:9999;
 </div>
 
 <script>
+
+let idleTimer;
+
+function resetIdleTimer(){
+  clearTimeout(idleTimer);
+
+  idleTimer = setTimeout(() => {
+    logout();
+    showPopup();
+  }, 3 * 1000); // 3 detik
+}
+  
 window.onload = function(){
   toggleBB();
   loadObat();
@@ -304,10 +316,16 @@ window.onload = function(){
 
   // sessionStorage (tanpa remember)
   if(sessionStorage.getItem("login") === "true"){
-    document.getElementById("login").style.display = "none";
-  }
-};
+  document.getElementById("login").style.display = "none";
 
+  // 🔥 AKTIFKAN TIMER HANYA DI SINI
+  resetIdleTimer();
+
+  document.addEventListener("click", resetIdleTimer);
+  document.addEventListener("keypress", resetIdleTimer);
+  document.addEventListener("mousemove", resetIdleTimer);
+  document.addEventListener("scroll", resetIdleTimer);
+}
 const users = [
   {username: "dokter", password: "dokter24"},
   {username: "admin", password: "klinik24"},
@@ -326,11 +344,19 @@ function login(){
     let now = new Date().getTime(); // 🔥 ambil waktu sekarang
 
     if(remember){
-      localStorage.setItem("login","true");
-      localStorage.setItem("loginTime", now); // 🔥 simpan waktu
-    } else {
-      sessionStorage.setItem("login","true");
-    }
+  localStorage.setItem("login","true");
+  localStorage.setItem("loginTime", now);
+} else {
+  sessionStorage.setItem("login","true");
+
+  // 🔥 TAMBAHKAN SEMUA INI
+  resetIdleTimer();
+
+  document.addEventListener("click", resetIdleTimer);
+  document.addEventListener("keypress", resetIdleTimer);
+  document.addEventListener("mousemove", resetIdleTimer);
+  document.addEventListener("scroll", resetIdleTimer);
+}
 
     document.getElementById("login").style.display = "none";
 
@@ -342,16 +368,18 @@ function logout(){
   localStorage.removeItem("login");
   sessionStorage.removeItem("login");
 
+  clearTimeout(idleTimer); // 🔥 TAMBAHKAN INI
+
   document.getElementById("user").value = "";
   document.getElementById("pass").value = "";
 
   document.getElementById("login").style.display = "flex";
 }
-  function showPopup(){
-  document.getElementById("popup").style.display = "flex";
-}
 
 function closePopup(){
   document.getElementById("popup").style.display = "none";
+}
+function showPopup(){
+  document.getElementById("popup").style.display = "flex";
 }
 </script>
