@@ -28,6 +28,7 @@ body {
   color:white;
 
   background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
   padding:20px;
   border-radius:20px;
   box-shadow:0 10px 30px rgba(0,0,0,0.3);
@@ -138,6 +139,7 @@ label {
 }
 .form-box {
   background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
   padding: var(--space-lg);
   border-radius:16px;
   margin-top:15px;
@@ -283,80 +285,26 @@ body {
   background-size: 200% 200%;
   animation: moveBg 10s ease infinite;
 }
-    #particles {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-.particle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: rgba(255,255,255,0.5);
-  border-radius: 50%;
-  animation: floatUp linear infinite;
-}
-
-@keyframes floatUp {
-  from {
-    transform: translateY(100vh);
-    opacity: 0;
-  }
-  20% { opacity: 1; }
-  to {
-    transform: translateY(-10vh);
-    opacity: 0;
-  }
-}
-
-/* pastikan login box di atas particle */
-.login-box {
-  position: relative;
-  z-index: 2;
-}
-    #particles {
-  position: fixed; /* 🔥 ganti absolute */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-#login {
-  z-index: 2;
-}
-
-#login > div {
-  position: relative;
-  z-index: 3;
-}
 </style>
 </head>
 
 <body>
-<div id="particles"></div>
+
 <!-- LOGIN SCREEN -->
 <div id="login" style="
 display:flex;
 height:100vh;
 justify-content:center;
 align-items:center;
-background: transparent;
+background: linear-gradient(135deg, #0f172a, #1e3a8a);
 position:fixed;
 top:0;left:0;width:100%;
 z-index:9999;
 ">
 
 <div style="
-background: rgba(15, 23, 42, 0.75);
-backdrop-filter: blur(6px);
-border: 1px solid rgba(255,255,255,0.1);
+background: rgba(255,255,255,0.1);
+backdrop-filter: blur(12px);
 padding:30px;
 border-radius:20px;
 text-align:center;
@@ -585,24 +533,7 @@ function startIdleTimer(){
 function stopIdleTimer(){
   clearTimeout(idleTimer);
 }
-
-  function createParticles() {
-  const container = document.getElementById("particles");
-
-  for (let i = 0; i < 30; i++) {
-    let p = document.createElement("div");
-    p.classList.add("particle");
-
-    p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = (5 + Math.random() * 5) + "s";
-    p.style.opacity = Math.random();
-
-    container.appendChild(p);
-  }
-};
 window.onload = function(){
-  createParticles(); // 🔥 WAJIB
-
   toggleBB();
   loadObat();
 
