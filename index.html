@@ -286,7 +286,7 @@ function resetIdleTimer(){
   idleTimer = setTimeout(() => {
     logout();
     showPopup();
-  }, 10 * 1000);
+  }, 3 * 1000); // 3 detik
 }
   
 window.onload = function(){
@@ -346,9 +346,8 @@ function login(){
     if(remember){
   localStorage.setItem("login","true");
   localStorage.setItem("loginTime", now);
-  
-  } else {
-    sessionStorage.setItem("login","true");
+} else {
+  sessionStorage.setItem("login","true");
 
   // 🔥 TAMBAHKAN SEMUA INI
   resetIdleTimer();
