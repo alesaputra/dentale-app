@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dental Klinik FINAL V3 (ALL FIXED)</title>
+
+<style>
+body {font-family: Arial; background:#eef2f7; padding:15px;}
+.container {max-width:520px; margin:auto;}
+h2 {text-align:center;}
+select,input,button {width:100%; padding:14px; margin:6px 0; border-radius:12px; font-size:15px;}
+button {background:#007bff; color:white; border:none;}
+.card {background:white; padding:15px; border-radius:12px; margin-top:10px;}
+.blue{border-left:6px solid #007bff;}
+.green{border-left:6px solid #28a745;}
+.red{border-left:6px solid #dc3545;}
+.orange{border-left:6px solid orange;}
+.hidden{display:none;}
+pre{white-space:pre-wrap;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>🦷 Dental Klinik FINAL V3</h2>
+
+<select id="mode" onchange="toggleBB()">
+<option value="dewasa">Dewasa</option>
+<option value="anak">Anak</option>
+</select>
+
+<input id="bb" class="hidden" placeholder="Berat badan anak (kg)">
+
+<select id="kategori">
+<option value="analgesik">Analgesik</option>
+<option value="antibiotik">Antibiotik</option>
+<option value="lain">Lain-lain</option>
+</select>
+
+<select id="obat"></select>
+
+<button onclick="run()">PROSES</button>
+
+<div id="out"></div>
+</div>
+
+<script>
+
+const data = {
+analgesik: ["Paracetamol","Ibuprofen","Mefenamic Acid","Diclofenac K","Ketorolac","Tramadol"],
+antibiotik: ["Amoxicillin","Amoxiclav","Cefadroxil","Cefixime","Clindamycin","Metronidazole","Azithromycin"],
+lain: ["Metylprednisolone","Omeprazole"]
+};
+
+function toggleBB(){
+let mode=document.getElementById("mode").value;
+let bb=document.getElementById("bb");
+mode=="anak" ? bb.classList.remove("hidden") : bb.classList.add("hidden");
+}
+
+function loadObat(){
+let kat=document.getElementById("kategori").value;
+let select=document.getElementById("obat");
+select.innerHTML="";
+data[kat].forEach(o=>{
+let opt=document.createElement("option");
+opt.text=o;
+select.add(opt);
+});
+}
+
+document.getElementById("kategori").addEventListener("change",loadObat);
+window.onload=function(){toggleBB(); loadObat();};
+
+function run(){
+
+let mode=document.getElementById("mode").value;
+let bb=parseFloat(document.getElementById("bb").value || 0);
+let obat=document.getElementById("obat").value;
+
+let dosis="",resep="",indikasi="",kontra="",merk="",kie="";
+
+// ================= DEWASA =================
+const dewasa = {
+"Paracetamol":["500 mg 3-4x","R/ Paracetamol 500 mg\nS: 3 dd 1","Nyeri ringan","Hati","Sanmol","Boleh sebelum/sesudah makan"],
+"Ibuprofen":["400 mg 3x","R/ Ibuprofen 400 mg\nS: 3 dd 1 p.c","Inflamasi","Gastritis","Proris","Setelah makan"],
+"Mefenamic Acid":["500 mg 3x","R/ Mefenamic acid 500 mg\nS: 3 dd 1","Nyeri sedang","Gastritis","Ponstan","Jangan saat perut kosong"],
+"Diclofenac K":["50 mg 2-3x","R/ Diclofenac K 50 mg\nS: 2 dd 1","Nyeri kuat","Ulkus","Cataflam","Setelah makan"],
+"Ketorolac":["10 mg 3x","R/ Ketorolac 10 mg\nS: 3 dd 1","Nyeri berat","Ginjal","Toradol","Max 5 hari"],
+"Tramadol":["50 mg 2-3x","R/ Tramadol 50 mg\nS: 2 dd 1","Nyeri berat","Ketergantungan","Tramal","Mengantuk"],
+
+"Amoxicillin":["500 mg 3x","R/ Amoxicillin 500 mg\nS: 3 dd 1","Infeksi","Alergi","Amoxil","Habiskan"],
+"Amoxiclav":["625 mg 3x","R/ Amoxiclav 625 mg\nS: 3 dd 1","Infeksi berat","Alergi","Augmentin","Setelah makan"],
+"Cefadroxil":["500 mg 2x","R/ Cefadroxil 500 mg\nS: 2 dd 1","Infeksi","Alergi","Duricef","Habiskan"],
+"Cefixime":["200 mg 2x","R/ Cefixime 200 mg\nS: 2 dd 1","Infeksi berat","Alergi","Suprax","Habiskan"],
+"Clindamycin":["300 mg 3x","R/ Clindamycin 300 mg\nS: 3 dd 1","Alergi penisilin","Diare","Dalacin","Stop jika diare"],
+"Metronidazole":["500 mg 3x","R/ Metronidazole 500 mg\nS: 3 dd 1","Anaerob","Alkohol","Flagyl","Tidak boleh alkohol"],
+"Azithromycin":["500 mg 1x","R/ Azithromycin 500 mg\nS: 1 dd 1","Alternatif","Hati","Zithromax","Sebelum makan"],
+
+"Metylprednisolone":["4 mg 3x","R/ Metylprednisolone 4 mg\nS: 3 dd 1","Inflamasi","Infeksi aktif","Medrol","Jangka pendek"],
+"Omeprazole":["20 mg 1x","R/ Omeprazole 20 mg\nS: 1 dd 1 a.c","Gastritis","Hipersensitif","Losec","Sebelum makan"]
+};
+
+// ================= ANAK =================
+const maxBB = 40;
+
+if(mode=="anak" && bb>0){
+
+let w = bb>maxBB ? maxBB : bb;
+let over = bb>maxBB;
+
+const anak = {
+"Paracetamol":[(w*0.5).toFixed(1)+" mL","R/ Paracetamol syr\nS: 3 dd "+(w*0.5).toFixed(1)+" mL","Demam","Hati","Sanmol Syr",""],
+"Ibuprofen":[(w*0.25).toFixed(1)+" mL","R/ Ibuprofen syr\nS: 3 dd "+(w*0.25).toFixed(1)+" mL","Nyeri","Gastritis","Proris Syr","Setelah makan"],
+"Amoxicillin":[(w*0.4).toFixed(1)+" mL","R/ Amoxicillin syr\nS: 3 dd "+(w*0.4).toFixed(1)+" mL","Infeksi","Alergi","Amoxil Syr","Habiskan"],
+"Cefadroxil":[(w*0.6).toFixed(1)+" mL","R/ Cefadroxil syr\nS: 2 dd "+(w*0.6).toFixed(1)+" mL","Infeksi","Alergi","Duricef Syr","Habiskan"],
+"Metronidazole":[(w*0.3).toFixed(1)+" mL","R/ Metronidazole syr\nS: 3 dd "+(w*0.3).toFixed(1)+" mL","Anaerob","Alkohol","Flagyl Syr","Hindari alkohol"]
+};
+
+if(anak[obat]){
+[dosis,resep,indikasi,kontra,merk,kie]=anak[obat];
+if(over) kie="BB > 40 kg → gunakan dosis maksimal anak";
+}else{
+dosis="-"; resep="-"; indikasi="-"; kontra="-"; merk="-"; kie="Tidak dianjurkan untuk anak";
+}
+
+}
+
+// ================= PILIH =================
+if(mode=="dewasa" && dewasa[obat]){
+[dosis,resep,indikasi,kontra,merk,kie]=dewasa[obat];
+}
+
+// OUTPUT
+document.getElementById("out").innerHTML=`
+<div class="card blue"><b>Dosis:</b><br>${dosis}</div>
+<div class="card green"><b>Resep:</b><pre>${resep}</pre></div>
+<div class="card green"><b>Indikasi:</b><br>${indikasi}</div>
+<div class="card red"><b>Kontraindikasi:</b><br>${kontra}</div>
+<div class="card orange"><b>Merk:</b><br>${merk}</div>
+<div class="card blue"><b>NB (KIE):</b><br>${kie}</div>
+`;
+
+}
+
+</script>
+
+</body>
+</html>
