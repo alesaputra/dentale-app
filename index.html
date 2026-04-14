@@ -40,6 +40,14 @@ button:hover {
 .orange{border-left:6px solid orange;}
 .hidden{display:none;}
 pre{white-space:pre-wrap;}
+#popup div {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform:scale(0.8);}
+  to {opacity:1; transform:scale(1);}
+}
 </style>
 </head>
 
@@ -93,8 +101,6 @@ font-weight:bold;
 ">
 Masuk
 </button>
-
-<div id="error" style="color:#f87171;margin-top:10px;"></div>
 
 </div>
 </div>
@@ -233,17 +239,71 @@ document.getElementById("out").innerHTML=`
 }
 
 </script>
+ <div id="popup" style="
+position:fixed;
+top:0; left:0;
+width:100%; height:100%;
+background:rgba(0,0,0,0.5);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+">
+
+  <div style="
+  background:white;
+  padding:25px;
+  border-radius:16px;
+  text-align:center;
+  width:280px;
+  ">
+
+    <h3>⏰ Session Expired</h3>
+    <p>Silakan login kembali</p>
+
+    <button onclick="closePopup()" style="
+    margin-top:10px;
+    padding:10px;
+    width:100%;
+    background:#ef4444;
+    color:white;
+    border:none;
+    border-radius:10px;
+    ">
+      OK
+    </button>
+
+  </div>
+</div>
 
 <script>
 window.onload = function(){
   toggleBB();
   loadObat();
 
-  // AUTO LOGIN (HARUS DI DALAM)
-  if(
-    localStorage.getItem("login") === "true" ||
-    sessionStorage.getItem("login") === "true"
-  ){
+  let login = localStorage.getItem("login");
+  let loginTime = localStorage.getItem("loginTime");
+
+  if(login === "true" && loginTime){
+    let now = new Date().getTime();
+    let diff = now - loginTime;
+
+    let batas = 1 * 60 * 1000; // 1 menit
+
+    if(diff < batas){
+      document.getElementById("login").style.display = "none";
+   } else {
+  localStorage.removeItem("login");
+  localStorage.removeItem("loginTime");
+
+  document.getElementById("login").style.display = "flex";
+
+  showPopup(); // 🔥 INI KUNCINYA
+}
+  }
+
+  // sessionStorage (tanpa remember)
+  if(sessionStorage.getItem("login") === "true"){
     document.getElementById("login").style.display = "none";
   }
 };
@@ -262,13 +322,14 @@ function login(){
   let found = users.find(u => u.username === user && u.password === pass);
 
   if(found){
-    
-    document.getElementById("error").innerText = "";
-    
+
+    let now = new Date().getTime(); // 🔥 ambil waktu sekarang
+
     if(remember){
-      localStorage.setItem("login","true"); // permanen
+      localStorage.setItem("login","true");
+      localStorage.setItem("loginTime", now); // 🔥 simpan waktu
     } else {
-      sessionStorage.setItem("login","true"); // sementara
+      sessionStorage.setItem("login","true");
     }
 
     document.getElementById("login").style.display = "none";
@@ -285,5 +346,12 @@ function logout(){
   document.getElementById("pass").value = "";
 
   document.getElementById("login").style.display = "flex";
+}
+  function showPopup(){
+  document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display = "none";
 }
 </script>
