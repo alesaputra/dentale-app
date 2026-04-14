@@ -73,20 +73,7 @@ button:active {
 .green{border-left:6px solid #28a745;}
 .red{border-left:6px solid #dc3545;}
 .orange{border-left:6px solid orange;}
-.hidden {
-  opacity:0;
-  transform:translateY(-10px);
-  pointer-events:none;
-  height:0;
-  overflow:hidden;
-  transition: all 0.3s ease;
-}
-.show {
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
-  height:auto;
-}
+.hidden{display:none;}
 pre{white-space:pre-wrap;}
 label {
   font-size:13px;
@@ -230,16 +217,9 @@ lain: ["Metylprednisolone","Omeprazole"]
 };
 
 function toggleBB(){
-  let mode = document.getElementById("mode").value;
-  let bbGroup = document.getElementById("bb-group");
-
-  if(mode == "anak"){
-    bbGroup.classList.remove("hidden");
-    bbGroup.classList.add("show");
-  } else {
-    bbGroup.classList.remove("show");
-    bbGroup.classList.add("hidden");
-  }
+let mode=document.getElementById("mode").value;
+let bb=document.getElementById("bb");
+mode=="anak" ? bb.classList.remove("hidden") : bb.classList.add("hidden");
 }
 
 function loadObat(){
