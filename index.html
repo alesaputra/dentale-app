@@ -5,12 +5,34 @@
 <title>Panduan resep dokter</title>
 
 <style>
-body {font-family: Arial; background:#eef2f7; padding:15px;}
-.container {max-width:520px; margin:auto;}
-h2 {text-align:center;}
+body {
+  font-family: Arial;
+  padding:15px;
+  background: linear-gradient(135deg, #0f172a, #1e3a8a, #38bdf8);
+  min-height:100vh;
+}
+.container {
+  max-width:520px;
+  margin:auto;
+  color:white;
+}
+h2 {
+  text-align:center;
+  color:white;
+}
 select,input,button {width:100%; padding:14px; margin:6px 0; border-radius:12px; font-size:15px;}
-button {background:#007bff; color:white; border:none;}
-.card {background:white; padding:15px; border-radius:12px; margin-top:10px;}
+button:hover {
+  transform: scale(1.03);
+  transition: 0.2s;
+}
+.card {
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(6px);
+  padding:15px;
+  border-radius:12px;
+  margin-top:10px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
 .blue{border-left:6px solid #007bff;}
 .green{border-left:6px solid #28a745;}
 .red{border-left:6px solid #dc3545;}
