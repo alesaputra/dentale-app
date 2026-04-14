@@ -188,9 +188,9 @@ Masuk
 <option value="anak">Anak</option>
 </select>
 
-<div class="form-group">
-  <label>Berat Badan (Mode Pasien Anak)</label>
-  <input id="bb" class="hidden" placeholder="Contoh: 20 (Kg)">
+<div id="bb-group" class="form-group hidden">
+  <label>Berat Badan (kg)</label>
+  <input id="bb" placeholder="Contoh: 20">
 </div>
 
 <label>Kategori Obat</label>
@@ -217,8 +217,15 @@ lain: ["Metylprednisolone","Omeprazole"]
 };
 
 function toggleBB(){
-let mode=document.getElementById("mode").value;
-let bb=document.getElementById("bb");
+  let mode = document.getElementById("mode").value;
+  let bbGroup = document.getElementById("bb-group");
+
+  if(mode == "anak"){
+    bbGroup.classList.remove("hidden");
+  } else {
+    bbGroup.classList.add("hidden");
+  }
+}
 mode=="anak" ? bb.classList.remove("hidden") : bb.classList.add("hidden");
 }
 
