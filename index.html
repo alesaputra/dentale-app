@@ -196,6 +196,16 @@ document.getElementById("out").innerHTML=`
 </script>
 
 <script>
+window.onload = function(){
+  toggleBB();
+  loadObat();
+
+  // AUTO LOGIN
+  if(localStorage.getItem("login") === "true"){
+    document.getElementById("login").style.display = "none";
+  }
+};
+
 const users = [
   {username: "dokter", password: "dokter24"},
   {username: "admin", password: "klinik24"},
@@ -209,12 +219,9 @@ function login(){
   let found = users.find(u => u.username === user && u.password === pass);
 
   if(found){
+    localStorage.setItem("login","true"); // 🔥 INI KUNCI
     document.getElementById("login").style.display = "none";
   } else {
     document.getElementById("error").innerText = "Username atau password salah!";
   }
 }
-</script>
-
-</body>
-</html>
