@@ -45,30 +45,23 @@ width:260px;
 color:white;
 ">
 
-<h2 style="margin-bottom:10px;">🔐 Dental App</h2>
-<p style="font-size:13px;opacity:0.8;">Masukkan password untuk masuk</p>
+<h2>🦷 Dental App</h2>
+
+<input type="text" id="user" placeholder="Username"
+style="padding:12px;margin-top:15px;border-radius:10px;border:none;width:100%;">
 
 <input type="password" id="pass" placeholder="Password"
-style="
-padding:12px;
-margin-top:15px;
-border-radius:10px;
-border:none;
-width:100%;
-outline:none;
-">
+style="padding:12px;margin-top:10px;border-radius:10px;border:none;width:100%;">
 
-<button onclick="login()" 
-style="
+<button onclick="login()" style="
 margin-top:12px;
 padding:12px;
 border:none;
 border-radius:10px;
-background: linear-gradient(135deg,#22c55e,#16a34a);
+background:#22c55e;
 color:white;
 width:100%;
 font-weight:bold;
-cursor:pointer;
 ">
 Masuk
 </button>
@@ -203,15 +196,22 @@ document.getElementById("out").innerHTML=`
 </script>
 
 <script>
-const PASSWORD = "dentale24";
+const users = [
+  {username: "dokter", password: "dokter24"},
+  {username: "admin", password: "klinik24"},
+  {username: "asisten", password: "babu24"}
+];
 
 function login(){
-  let input = document.getElementById("pass").value;
+  let user = document.getElementById("user").value;
+  let pass = document.getElementById("pass").value;
 
-  if(input === PASSWORD){
+  let found = users.find(u => u.username === user && u.password === pass);
+
+  if(found){
     document.getElementById("login").style.display = "none";
   } else {
-    document.getElementById("error").innerText = "Password salah!";
+    document.getElementById("error").innerText = "Username atau password salah!";
   }
 }
 </script>
