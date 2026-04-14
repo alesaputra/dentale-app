@@ -125,7 +125,6 @@ select.add(opt);
 }
 
 document.getElementById("kategori").addEventListener("change",loadObat);
-window.onload=function(){toggleBB(); loadObat();};
 
 function run(){
 
@@ -201,17 +200,17 @@ document.getElementById("out").innerHTML=`
 </script>
 
 <script>
-  window.onload = function(){
+window.onload = function(){
   toggleBB();
   loadObat();
-};
-  // AUTO LOGIN
- if(
-  localStorage.getItem("login") === "true" ||
-  sessionStorage.getItem("login") === "true"
-){
-  document.getElementById("login").style.display = "none";
-}
+
+  // AUTO LOGIN (HARUS DI DALAM)
+  if(
+    localStorage.getItem("login") === "true" ||
+    sessionStorage.getItem("login") === "true"
+  ){
+    document.getElementById("login").style.display = "none";
+  }
 };
 
 const users = [
