@@ -26,17 +26,30 @@ h2 {
   text-align:center;
   color:white;
 }
-select,input {
+select, input {
   width:100%;
-  padding:14px;
-  margin:8px 0;
+  height:50px; /* 🔥 SAMAKAN TINGGI */
+  padding:0 14px; /* 🔥 jangan pakai padding atas bawah */
+  
   border-radius:12px;
   font-size:15px;
+
   border:none;
   outline:none;
 
-  background: rgba(255,255,255,0.95);
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+  background:#e5e7eb; /* 🔥 warna putih abu seperti Mode Pasien */
+  color:#111;
+
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  
+  appearance:none; /* 🔥 hilangkan style beda browser */
+}
+select {
+  cursor:pointer;
+}
+input:focus, select:focus {
+  background:#fff;
+  box-shadow:0 0 0 2px #38bdf8;
 }
 button {
   width:100%;
