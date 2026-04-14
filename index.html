@@ -346,8 +346,9 @@ function login(){
     if(remember){
   localStorage.setItem("login","true");
   localStorage.setItem("loginTime", now);
-} else {
-  sessionStorage.setItem("login","true");
+  
+  } else {
+    sessionStorage.setItem("login","true");
 
   // 🔥 TAMBAHKAN SEMUA INI
   resetIdleTimer();
