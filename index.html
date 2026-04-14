@@ -14,8 +14,13 @@
 body {
   font-family: Arial;
   padding:15px;
-  background: linear-gradient(135deg, #0f172a, #1e3a8a, #38bdf8);
   min-height:100vh;
+
+  background: radial-gradient(circle at 20% 30%, #38bdf8 0%, transparent 40%),
+              radial-gradient(circle at 80% 70%, #6366f1 0%, transparent 40%),
+              linear-gradient(135deg, #0f172a, #1e3a8a);
+
+  background-attachment: fixed;
 }
 .container {
   max-width:520px;
@@ -27,6 +32,13 @@ body {
   padding:20px;
   border-radius:20px;
   box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+.form-box {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  border-radius:20px;
+  padding:25px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
 h2 {
   text-align:center;
@@ -262,6 +274,16 @@ input:focus, select:focus {
   margin-top:6px;
   text-align:center;
   line-height:1.4;
+}
+   @keyframes moveBg {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+body {
+  background-size: 200% 200%;
+  animation: moveBg 10s ease infinite;
 }
 </style>
 </head>
