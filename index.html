@@ -27,7 +27,7 @@ body {
   background-attachment: fixed;
 }
 
-/* ====== LOGIN SCREEN BARU ====== */
+/* ====== LOGIN SCREEN + ANIMASI ====== */
 #login {
   display:flex;
   height:100vh;
@@ -38,6 +38,12 @@ body {
   top:0;left:0;width:100%;
   z-index:9999;
   padding: 20px;
+  transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+#login.fade-out {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .login-card {
@@ -48,6 +54,11 @@ body {
   border-radius: 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   text-align: center;
+  transition: transform 0.4s ease;
+}
+
+.login-card.success {
+  transform: scale(0.95);
 }
 
 .logo {
@@ -80,17 +91,26 @@ body {
   width: 100%;
   padding: 16px 48px 16px 20px;
   background: var(--blue-light);
-  border: none;
+  border: 2px solid transparent;
   border-radius: 16px;
   font-size: 16px;
   color: #334155;
   outline: none;
+  transition: all 0.2s ease;
 }
 
 .login-input::placeholder { color: #64748B; }
-.login-input:focus {
+
+/* EFEK HOVER + FOCUS BARU */
+.login-input:hover {
   background: #E0F2FE;
-  box-shadow: 0 0 0 2px var(--blue-main);
+  transform: translateY(-1px);
+}
+
+.login-input:focus {
+  background: #FFFFFF;
+  border-color: var(--blue-main);
+  box-shadow: 0 0 0 4px rgba(74, 179, 230, 0.15);
 }
 
 .input-icon {
@@ -100,7 +120,12 @@ body {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  fill: #1E293B;
+  fill: #64748B;
+  transition: fill 0.2s;
+}
+
+.login-input:focus ~.input-icon {
+  fill: var(--blue-main);
 }
 
 .remember-box {
@@ -113,6 +138,11 @@ body {
   align-items: center;
   gap: 10px;
   justify-content: flex-start;
+  transition: background 0.2s;
+}
+
+.remember-box:hover {
+  background: #E0F2FE;
 }
 
 .remember-box input[type="checkbox"] {
@@ -140,11 +170,18 @@ body {
   color: #FFFFFF;
   cursor: pointer;
   transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-masuk:hover {
   background: var(--blue-dark);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 179, 230, 0.3);
+}
+
+.btn-masuk:active {
+  transform: translateY(0px);
 }
 
 #error {
@@ -152,9 +189,44 @@ body {
   font-size: 14px;
   margin-top: -8px;
   margin-bottom: 16px;
+  min-height: 20px;
 }
 
-/* ====== APP UTAMA - GAK DIUBAH BANYAK ====== */
+/* ANIMASI CHECKMARK SUKSES */
+.success-check {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 80px;
+  height: 80px;
+  background: var(--blue-main);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.success-check.show {
+  animation: popIn 0.5s ease forwards;
+}
+
+.success-check svg {
+  width: 40px;
+  height: 40px;
+  stroke: white;
+  stroke-width: 3;
+  fill: none;
+}
+
+@keyframes popIn {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* ====== APP UTAMA ====== */
 .container {
   max-width:520px;
   margin:auto;
@@ -250,7 +322,7 @@ label {
 }
 
 @media (max-width: 768px) {
- .container { max-width:90%; }
+.container { max-width:90%; }
   body { padding:10px; }
   h2 { font-size:18px; }
 }
@@ -259,9 +331,9 @@ label {
 
 <body>
 
-<!-- LOGIN SCREEN BARU -->
+<!-- LOGIN SCREEN + CHECKMARK -->
 <div id="login">
-  <div class="login-card">
+  <div class="login-card" id="loginCard">
     <div class="logo">
       <svg viewBox="0 0 24 24">
         <path d="M12 2C9 2 6 4 6 7C6 9 6.5 10 7 11C7.5 12 8 14 8 16C8 18 9 20 12 20C15 20 16 18 16 16C16 14 16.5 12 17 11C17.5 10 18 9 18 7C18 4 15 2 12 2Z"/>
@@ -291,10 +363,16 @@ label {
     
     <div id="error"></div>
     <button onclick="login()" class="btn-masuk">Masuk</button>
+    
+    <div class="success-check" id="successCheck">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
   </div>
 </div>
 
-<!-- APP UTAMA - SAMA KAYAK PUNYAMU -->
+<!-- APP UTAMA -->
 <div class="container">
 <h2 style="letter-spacing:1px;">🦷 Dentale Smart Resep</h2>
 <p style="text-align:center; font-size:12px; opacity:0.7;">
@@ -391,15 +469,15 @@ const anak = {
 "Cefadroxil":[(w*0.6).toFixed(1)+" mL","R/ Cefadroxil syr\nS: 2 dd "+(w*0.6).toFixed(1)+" mL","Infeksi","Alergi","Duricef Syr","Habiskan"],
 "Metronidazole":[(w*0.3).toFixed(1)+" mL","R/ Metronidazole syr\nS: 3 dd "+(w*0.3).toFixed(1)+" mL","Anaerob","Alkohol","Flagyl Syr","Hindari alkohol"]
 };
-if(anak[obat]){
-[dosis,resep,indikasi,kontra,merk,kie]=anak[obat];
+if(anak){
+[dosis,resep,indikasi,kontra,merk,kie]=anak;
 if(over) kie="BB > 40 kg → gunakan dosis maksimal anak";
 }else{
 dosis="-"; resep="-"; indikasi="-"; kontra="-"; merk="-"; kie="Tidak dianjurkan untuk anak";
 }
 }
-if(mode=="dewasa" && dewasa[obat]){
-[dosis,resep,indikasi,kontra,merk,kie]=dewasa[obat];
+if(mode=="dewasa" && dewasa){
+[dosis,resep,indikasi,kontra,merk,kie]=dewasa;
 }
 document.getElementById("out").innerHTML=`
 <div class="card blue"><b>Dosis:</b><br>${dosis}</div>
@@ -458,25 +536,42 @@ const users = [
   {username: "admin", password: "klinik24"},
   {username: "asisten", password: "babu24"}
 ];
+
 function login(){
   let user = document.getElementById("user").value;
   let pass = document.getElementById("pass").value;
   let remember = document.getElementById("remember").checked;
   let found = users.find(u => u.username === user && u.password === pass);
+  
   if(found){
-    let now = new Date().getTime();
-    if(remember){
-      localStorage.setItem("login","true");
-      localStorage.setItem("loginTime", now);
-    } else {
-      sessionStorage.setItem("login","true");
-      startIdleTimer();
-    }
-    document.getElementById("login").style.display = "none";
+    // ANIMASI SUKSES
+    document.getElementById("loginCard").classList.add("success");
+    document.getElementById("successCheck").classList.add("show");
+    
+    setTimeout(() => {
+      let now = new Date().getTime();
+      if(remember){
+        localStorage.setItem("login","true");
+        localStorage.setItem("loginTime", now);
+      } else {
+        sessionStorage.setItem("login","true");
+        startIdleTimer();
+      }
+      document.getElementById("login").classList.add("fade-out");
+      setTimeout(() => {
+        document.getElementById("login").style.display = "none";
+      }, 500);
+    }, 800);
+    
   } else {
     document.getElementById("error").innerText = "Username atau password salah!";
+    document.getElementById("loginCard").style.animation = "shake 0.4s";
+    setTimeout(() => {
+      document.getElementById("loginCard").style.animation = "";
+    }, 400);
   }
 }
+
 function logout(){
   localStorage.removeItem("login");
   sessionStorage.removeItem("login");
@@ -484,9 +579,21 @@ function logout(){
   document.getElementById("user").value = "";
   document.getElementById("pass").value = "";
   document.getElementById("login").style.display = "flex";
+  document.getElementById("login").classList.remove("fade-out");
+  document.getElementById("loginCard").classList.remove("success");
+  document.getElementById("successCheck").classList.remove("show");
 }
 function showPopup(){ document.getElementById("popup").style.display = "flex"; }
 function closePopup(){ document.getElementById("popup").style.display = "none"; }
 </script>
+
+<style>
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+</style>
+
 </body>
 </html>
