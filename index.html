@@ -355,8 +355,9 @@ label {
 <div id="login">
   <div class="login-card" id="loginCard">
     <div class="logo">
+      <!-- LOGO GIGI YANG UDAH BENER -->
       <svg viewBox="0 0 24 24" fill="#4AB3E6">
-        <path d="M12 2.5c-2.8 0-5 1.8-5 4.1c0 1.4.5 2.5 1.1 3.4c.6.9 1.1 2 1.1 3.4c0 1.7.8 2.9 2.8 3.1c2.2 2.8-1.4 2.8-3.1c0-1.4.5-2.5 1.1-3.4c.6-.9 1.1-2 1.1-3.4c0-2.3-2.2-4.1-5-4.1z"/>
+        <path d="M12 2c-3.3 0-6 2.2-6 5c0 1.7 3.1 1.7 4.1c1.9 1.8 2.3 1.8 3.9c0 2.1 1 3.5 3.5s3.5-1.4 3.5-3.5c0-1.6.8-3 1.8-3.9c1-1 1.7-2.4 1.7-4.1c0-2.8-2.7-5-6-5z"/>
       </svg>
     </div>
     
@@ -497,15 +498,15 @@ const anak = {
 "Cefadroxil":[(w*0.6).toFixed(1)+" mL","R/ Cefadroxil syr\nS: 2 dd "+(w*0.6).toFixed(1)+" mL","Infeksi","Alergi","Duricef Syr","Habiskan"],
 "Metronidazole":[(w*0.3).toFixed(1)+" mL","R/ Metronidazole syr\nS: 3 dd "+(w*0.3).toFixed(1)+" mL","Anaerob","Alkohol","Flagyl Syr","Hindari alkohol"]
 };
-if(anak[obat]){
-[dosis,resep,indikasi,kontra,merk,kie]=anak[obat];
+if(anak){
+[dosis,resep,indikasi,kontra,merk,kie]=anak;
 if(over) kie="BB > 40 kg → gunakan dosis maksimal anak";
 }else{
 dosis="-"; resep="-"; indikasi="-"; kontra="-"; merk="-"; kie="Tidak dianjurkan untuk anak";
 }
 }
-if(mode=="dewasa" && dewasa[obat]){
-[dosis,resep,indikasi,kontra,merk,kie]=dewasa[obat];
+if(mode=="dewasa" && dewasa){
+[dosis,resep,indikasi,kontra,merk,kie]=dewasa;
 }
 document.getElementById("out").innerHTML=`
 <div class="card blue"><b>Dosis:</b><br>${dosis}</div>
