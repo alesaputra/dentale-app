@@ -15,7 +15,6 @@ body{
   background-attachment:fixed;
 }
 
-/* ====== LOGIN ====== */
 #login{
   display:flex;
   height:100vh;
@@ -97,7 +96,6 @@ body{
 
 #error{color:#ef4444;font-size:14px;min-height:20px;margin-bottom:8px}
 
-/* ====== APP ====== */
 .container{display:none;max-width:520px;margin:auto;color:white;padding:20px;padding-top:0}
 
 .app-header{
@@ -240,23 +238,6 @@ label{font-size:13px;margin-top:10px;display:block;color:#e2e8f0}
   font-size:12px;
   cursor:pointer;
 }
-
-#popup{
-  position:fixed;
-  top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,0.5);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-#popup div{
-  background:white;
-  padding:25px;
-  border-radius:16px;
-  text-align:center;
-  width:280px;
-}
 </style>
 </head>
 <body>
@@ -303,7 +284,7 @@ label{font-size:13px;margin-top:10px;display:block;color:#e2e8f0}
     <input id="bb" class="hidden" placeholder="Contoh: 20 (Kg)">
 
     <label>Kategori Obat</label>
-    <select id="kategori">
+    <select id="kategori" onchange="loadObat()">
       <option value="analgesik">Analgesik</option>
       <option value="antibiotik">Antibiotik</option>
       <option value="lain">Lain-lain</option>
@@ -321,14 +302,6 @@ label{font-size:13px;margin-top:10px;display:block;color:#e2e8f0}
   </div>
 
   <div id="out"></div>
-</div>
-
-<div id="popup">
-  <div>
-    <h3>⏰ Session Expired</h3>
-    <p>Silakan login kembali</p>
-    <button onclick="closePopup()" style="margin-top:10px;padding:10px;width:100%;background:#ef4444;color:white;border:none;border-radius:10px;">OK</button>
-  </div>
 </div>
 
 <script>
@@ -414,7 +387,6 @@ function checkLogin(){
     }else{
       localStorage.removeItem("login");
       localStorage.removeItem("loginTime");
-      showPopup();
     }
   }
   
@@ -442,8 +414,6 @@ function loadObat(){
     select.add(opt);
   });
 }
-
-document.getElementById("kategori").addEventListener("change",loadObat);
 
 function run(){
   let mode=document.getElementById("mode").value;
@@ -480,15 +450,16 @@ function run(){
       "Cefadroxil":[(w*0.6).toFixed(1)+" mL","R/ Cefadroxil syr\nS: 2 dd "+(w*0.6).toFixed(1)+" mL","Infeksi","Alergi","Duricef Syr","Habiskan"],
       "Metronidazole":[(w*0.3).toFixed(1)+" mL","R/ Metronidazole syr\nS: 3 dd "+(w*0.3).toFixed(1)+" mL","Anaerob","Alkohol","Flagyl Syr","Hindari alkohol"]
     };
-    if(anak){
-      [dosis,resep,indikasi,kontra,merk,kie]=anak;
+    if(anak[obat]){
+      [dosis,resep,indikasi,kontra,merk,kie]=anak[obat];
       if(over)kie="BB > 40 kg → gunakan dosis maksimal anak";
     }else{
       dosis="-";resep="-";indikasi="-";kontra="-";merk="-";kie="Tidak dianjurkan untuk anak";
     }
-  }
-  if(mode=="dewasa"&&dewasa){
-    [dosis,resep,indikasi,kontra,merk,kie]=dewasa;
+  }else if(mode=="dewasa"&&dewasa[obat]){
+    [dosis,resep,indikasi,kontra,merk,kie]=dewasa[obat];
+  }else{
+    dosis="-";resep="-";indikasi="-";kontra="-";merk="-";kie="-";
   }
   
   currentResep=resep;
@@ -544,14 +515,6 @@ function resetForm(){
   document.getElementById("bb").value="";
   document.getElementById("out").innerHTML="";
   currentResep="";
-}
-
-function showPopup(){
-  document.getElementById("popup").style.display="flex";
-}
-
-function closePopup(){
-  document.getElementById("popup").style.display="none";
 }
 
 window.onload=function(){
