@@ -14,7 +14,6 @@ body{
   background: radial-gradient(circle at 20% 30%, #38bdf8 0%, transparent 40%),
               radial-gradient(circle at 80% 70%, #6366f1 0%, transparent 40%),
               linear-gradient(135deg,#0f172a,#1e3a8a);
-  background-attachment:fixed;
 }
 
 /* LOGIN */
@@ -82,7 +81,13 @@ body{
 }
 
 /* APP */
-.container{display:none;padding:20px;color:white;max-width:520px;margin:auto}
+.container{
+  display:none;
+  padding:20px;
+  color:white;
+  max-width:520px;
+  margin:auto;
+}
 
 .form-box{
   background:rgba(255,255,255,0.12);
@@ -156,7 +161,7 @@ pre{white-space:pre-wrap}
     <input id="user" class="login-input" placeholder="Username">
     <input id="pass" type="password" class="login-input" placeholder="Password">
     <button class="btn" onclick="login()">Masuk</button>
-    <div id="error" style="color:red"></div>
+    <div id="error" style="color:red;margin-top:5px;"></div>
   </div>
 </div>
 
@@ -212,25 +217,30 @@ const users=[
 ];
 
 function login(){
-let u=user.value;
-let p=pass.value;
-let found=users.find(x=>x.username===u&&x.password===p);
+  let u=document.getElementById("user").value;
+  let p=document.getElementById("pass").value;
 
-if(found){
-success.style.display="flex";
-setTimeout(()=>{
-success.style.display="none";
-login.style.display="none";
-app.style.display="block";
-loadObat();
-},800);
-}else{
-error.innerText="Username / Password salah";
-}
+  let found=users.find(x=>x.username===u && x.password===p);
+
+  if(found){
+    document.getElementById("success").style.display="flex";
+
+    setTimeout(()=>{
+      document.getElementById("success").style.display="none";
+      document.getElementById("login").style.display="none";
+      document.getElementById("app").style.display="block";
+      loadObat();
+    },800);
+
+  }else{
+    document.getElementById("error").innerText="Username / Password salah";
+  }
 }
 
 function toggleBB(){
-bb.classList.toggle("hidden",mode.value!=="anak");
+  let mode=document.getElementById("mode").value;
+  let bb=document.getElementById("bb");
+  mode==="anak"?bb.classList.remove("hidden"):bb.classList.add("hidden");
 }
 
 const data={
@@ -240,103 +250,109 @@ lain:["Metylprednisolone","Omeprazole"]
 };
 
 function loadObat(){
-obat.innerHTML="";
-data[kategori.value].forEach(o=>{
-let opt=document.createElement("option");
-opt.text=o;
-obat.add(opt);
-});
+  let kategori=document.getElementById("kategori").value;
+  let select=document.getElementById("obat");
+  select.innerHTML="";
+  data[kategori].forEach(o=>{
+    let opt=document.createElement("option");
+    opt.text=o;
+    select.add(opt);
+  });
 }
 
 let currentResep="";
 
 function run(){
-let m=mode.value;
-let bbv=parseFloat(bb.value||0);
-let o=obat.value;
+  let mode=document.getElementById("mode").value;
+  let bb=parseFloat(document.getElementById("bb").value||0);
+  let obat=document.getElementById("obat").value;
 
-let dosis="",resep="",indikasi="",kontra="",merk="",kie="";
+  let dosis="",resep="",indikasi="",kontra="",merk="",kie="";
 
-const dewasa={
-"Paracetamol":["500 mg 3-4x","R/ Paracetamol 500 mg\nS: 3 dd 1","Nyeri ringan","Hati","Sanmol","Boleh sebelum/sesudah makan"],
-"Ibuprofen":["400 mg 3x","R/ Ibuprofen 400 mg\nS: 3 dd 1 p.c","Inflamasi","Gastritis","Proris","Setelah makan"],
-"Mefenamic Acid":["500 mg 3x","R/ Mefenamic acid 500 mg\nS: 3 dd 1","Nyeri sedang","Gastritis","Ponstan","Jangan saat perut kosong"],
-"Diclofenac K":["50 mg 2-3x","R/ Diclofenac K 50 mg\nS: 2 dd 1","Nyeri kuat","Ulkus","Cataflam","Setelah makan"],
-"Ketorolac":["10 mg 3x","R/ Ketorolac 10 mg\nS: 3 dd 1","Nyeri berat","Ginjal","Toradol","Max 5 hari"],
-"Tramadol":["50 mg 2-3x","R/ Tramadol 50 mg\nS: 2 dd 1","Nyeri berat","Ketergantungan","Tramal","Mengantuk"],
-"Amoxicillin":["500 mg 3x","R/ Amoxicillin 500 mg\nS: 3 dd 1","Infeksi","Alergi","Amoxil","Habiskan"],
-"Amoxiclav":["625 mg 3x","R/ Amoxiclav 625 mg\nS: 3 dd 1","Infeksi berat","Alergi","Augmentin","Setelah makan"],
-"Cefadroxil":["500 mg 2x","R/ Cefadroxil 500 mg\nS: 2 dd 1","Infeksi","Alergi","Duricef","Habiskan"],
-"Cefixime":["200 mg 2x","R/ Cefixime 200 mg\nS: 2 dd 1","Infeksi berat","Alergi","Suprax","Habiskan"],
-"Clindamycin":["300 mg 3x","R/ Clindamycin 300 mg\nS: 3 dd 1","Alergi penisilin","Diare","Dalacin","Stop jika diare"],
-"Metronidazole":["500 mg 3x","R/ Metronidazole 500 mg\nS: 3 dd 1","Anaerob","Alkohol","Flagyl","Tidak boleh alkohol"],
-"Azithromycin":["500 mg 1x","R/ Azithromycin 500 mg\nS: 1 dd 1","Alternatif","Hati","Zithromax","Sebelum makan"],
-"Metylprednisolone":["4 mg 3x","R/ Metylprednisolone 4 mg\nS: 3 dd 1","Inflamasi","Infeksi aktif","Medrol","Jangka pendek"],
-"Omeprazole":["20 mg 1x","R/ Omeprazole 20 mg\nS: 1 dd 1 a.c","Gastritis","Hipersensitif","Losec","Sebelum makan"]
-};
+  const dewasa={
+    "Paracetamol":["500 mg 3-4x","R/ Paracetamol 500 mg\nS: 3 dd 1","Nyeri ringan","Hati","Sanmol","Boleh sebelum/sesudah makan"],
+    "Ibuprofen":["400 mg 3x","R/ Ibuprofen 400 mg\nS: 3 dd 1 p.c","Inflamasi","Gastritis","Proris","Setelah makan"],
+    "Mefenamic Acid":["500 mg 3x","R/ Mefenamic acid 500 mg\nS: 3 dd 1","Nyeri sedang","Gastritis","Ponstan","Jangan saat perut kosong"],
+    "Diclofenac K":["50 mg 2-3x","R/ Diclofenac K 50 mg\nS: 2 dd 1","Nyeri kuat","Ulkus","Cataflam","Setelah makan"],
+    "Ketorolac":["10 mg 3x","R/ Ketorolac 10 mg\nS: 3 dd 1","Nyeri berat","Ginjal","Toradol","Max 5 hari"],
+    "Tramadol":["50 mg 2-3x","R/ Tramadol 50 mg\nS: 2 dd 1","Nyeri berat","Ketergantungan","Tramal","Mengantuk"],
+    "Amoxicillin":["500 mg 3x","R/ Amoxicillin 500 mg\nS: 3 dd 1","Infeksi","Alergi","Amoxil","Habiskan"],
+    "Amoxiclav":["625 mg 3x","R/ Amoxiclav 625 mg\nS: 3 dd 1","Infeksi berat","Alergi","Augmentin","Setelah makan"],
+    "Cefadroxil":["500 mg 2x","R/ Cefadroxil 500 mg\nS: 2 dd 1","Infeksi","Alergi","Duricef","Habiskan"],
+    "Cefixime":["200 mg 2x","R/ Cefixime 200 mg\nS: 2 dd 1","Infeksi berat","Alergi","Suprax","Habiskan"],
+    "Clindamycin":["300 mg 3x","R/ Clindamycin 300 mg\nS: 3 dd 1","Alergi penisilin","Diare","Dalacin","Stop jika diare"],
+    "Metronidazole":["500 mg 3x","R/ Metronidazole 500 mg\nS: 3 dd 1","Anaerob","Alkohol","Flagyl","Tidak boleh alkohol"],
+    "Azithromycin":["500 mg 1x","R/ Azithromycin 500 mg\nS: 1 dd 1","Alternatif","Hati","Zithromax","Sebelum makan"],
+    "Metylprednisolone":["4 mg 3x","R/ Metylprednisolone 4 mg\nS: 3 dd 1","Inflamasi","Infeksi aktif","Medrol","Jangka pendek"],
+    "Omeprazole":["20 mg 1x","R/ Omeprazole 20 mg\nS: 1 dd 1 a.c","Gastritis","Hipersensitif","Losec","Sebelum makan"]
+  };
 
-const anak={
-"Paracetamol":[(bbv*0.5).toFixed(1)+" mL","R/ Paracetamol syr\nS: 3 dd "+(bbv*0.5).toFixed(1)+" mL","Demam","Hati","Sanmol Syr",""],
-"Ibuprofen":[(bbv*0.25).toFixed(1)+" mL","R/ Ibuprofen syr\nS: 3 dd "+(bbv*0.25).toFixed(1)+" mL","Nyeri","Gastritis","Proris Syr","Setelah makan"],
-"Amoxicillin":[(bbv*0.4).toFixed(1)+" mL","R/ Amoxicillin syr\nS: 3 dd "+(bbv*0.4).toFixed(1)+" mL","Infeksi","Alergi","Amoxil Syr","Habiskan"],
-"Cefadroxil":[(bbv*0.6).toFixed(1)+" mL","R/ Cefadroxil syr\nS: 2 dd "+(bbv*0.6).toFixed(1)+" mL","Infeksi","Alergi","Duricef Syr","Habiskan"],
-"Metronidazole":[(bbv*0.3).toFixed(1)+" mL","R/ Metronidazole syr\nS: 3 dd "+(bbv*0.3).toFixed(1)+" mL","Anaerob","Alkohol","Flagyl Syr","Hindari alkohol"]
-};
+  const anak={
+    "Paracetamol":[(bb*0.5).toFixed(1)+" mL","R/ Paracetamol syr\nS: 3 dd "+(bb*0.5).toFixed(1)+" mL","Demam","Hati","Sanmol Syr",""],
+    "Ibuprofen":[(bb*0.25).toFixed(1)+" mL","R/ Ibuprofen syr\nS: 3 dd "+(bb*0.25).toFixed(1)+" mL","Nyeri","Gastritis","Proris Syr","Setelah makan"],
+    "Amoxicillin":[(bb*0.4).toFixed(1)+" mL","R/ Amoxicillin syr\nS: 3 dd "+(bb*0.4).toFixed(1)+" mL","Infeksi","Alergi","Amoxil Syr","Habiskan"],
+    "Cefadroxil":[(bb*0.6).toFixed(1)+" mL","R/ Cefadroxil syr\nS: 2 dd "+(bb*0.6).toFixed(1)+" mL","Infeksi","Alergi","Duricef Syr","Habiskan"],
+    "Metronidazole":[(bb*0.3).toFixed(1)+" mL","R/ Metronidazole syr\nS: 3 dd "+(bb*0.3).toFixed(1)+" mL","Anaerob","Alkohol","Flagyl Syr","Hindari alkohol"]
+  };
 
-if(m==="dewasa"&&dewasa[o]){
-[dosis,resep,indikasi,kontra,merk,kie]=dewasa[o];
-}else if(m==="anak"&&anak[o]){
-[dosis,resep,indikasi,kontra,merk,kie]=anak[o];
-}else{
-dosis="-";resep="-";
-}
+  if(mode==="dewasa" && dewasa[obat]){
+    [dosis,resep,indikasi,kontra,merk,kie]=dewasa[obat];
+  }else if(mode==="anak" && anak[obat]){
+    [dosis,resep,indikasi,kontra,merk,kie]=anak[obat];
+  }else{
+    dosis="-";resep="-";
+  }
 
-currentResep=resep;
+  currentResep=resep;
 
-out.innerHTML=`
-<div class="tabs">
-<button class="tab-btn active" onclick="showTab(event,'dosis')">Dosis</button>
-<button class="tab-btn" onclick="showTab(event,'resep')">Resep</button>
-<button class="tab-btn" onclick="showTab(event,'kie')">KIE</button>
-<button class="tab-btn" onclick="showTab(event,'info')">Info</button>
-</div>
+  document.getElementById("out").innerHTML=`
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab(event,'dosis')">Dosis</button>
+    <button class="tab-btn" onclick="showTab(event,'resep')">Resep</button>
+    <button class="tab-btn" onclick="showTab(event,'kie')">KIE</button>
+    <button class="tab-btn" onclick="showTab(event,'info')">Info</button>
+  </div>
 
-<div id="tab-dosis" class="tab-content active">
-<div class="card"><b>Dosis:</b><br>${dosis}</div>
-</div>
+  <div id="tab-dosis" class="tab-content active">
+    <div class="card"><b>Dosis:</b><br>${dosis}</div>
+  </div>
 
-<div id="tab-resep" class="tab-content">
-<div class="card"><pre>${resep}</pre></div>
-</div>
+  <div id="tab-resep" class="tab-content">
+    <div class="card"><pre>${resep}</pre></div>
+  </div>
 
-<div id="tab-kie" class="tab-content">
-<div class="card">${kie}</div>
-</div>
+  <div id="tab-kie" class="tab-content">
+    <div class="card">${kie}</div>
+  </div>
 
-<div id="tab-info" class="tab-content">
-<div class="card">Indikasi: ${indikasi}</div>
-<div class="card">Kontra: ${kontra}</div>
-<div class="card">Merk: ${merk}</div>
-</div>
-`;
+  <div id="tab-info" class="tab-content">
+    <div class="card">Indikasi: ${indikasi}</div>
+    <div class="card">Kontra: ${kontra}</div>
+    <div class="card">Merk: ${merk}</div>
+  </div>
+  `;
 }
 
 function showTab(e,tab){
-document.querySelectorAll(".tab-content").forEach(x=>x.classList.remove("active"));
-document.querySelectorAll(".tab-btn").forEach(x=>x.classList.remove("active"));
-document.getElementById("tab-"+tab).classList.add("active");
-e.target.classList.add("active");
+  document.querySelectorAll(".tab-content").forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(x=>x.classList.remove("active"));
+  document.getElementById("tab-"+tab).classList.add("active");
+  e.target.classList.add("active");
 }
 
 function copyResep(){
-if(!currentResep){alert("Belum ada resep");return;}
-navigator.clipboard.writeText(currentResep);
-alert("Tersalin!");
+  if(!currentResep){
+    alert("Belum ada resep");
+    return;
+  }
+  navigator.clipboard.writeText(currentResep);
+  alert("Tersalin!");
 }
 
 function resetForm(){
-bb.value="";
-out.innerHTML="";
+  document.getElementById("bb").value="";
+  document.getElementById("out").innerHTML="";
+  currentResep="";
 }
 
 </script>
