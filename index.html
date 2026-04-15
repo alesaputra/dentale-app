@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dental App</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
@@ -34,10 +34,15 @@ body{
   border-radius:24px;
   box-shadow:0 8px 32px rgba(0,0,0,0.08);
   text-align:center;
+  transition:transform 0.3s ease;
 }
 
-.logo{font-size:42px;margin-bottom:12px}
-.login-card h2{font-size:20px;color:#1E293B;margin-bottom:28px}
+.login-card:hover{transform:translateY(-4px)}
+
+.logo{font-size:42px;margin-bottom:12px;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+.login-card h2{font-size:20px;color:#1E293B;margin-bottom:28px;font-weight:600}
 
 .login-input{
   width:100%;
@@ -49,12 +54,14 @@ body{
   margin-bottom:12px;
   outline:none;
   color:#334155;
+  transition:all 0.3s;
 }
 
 .login-input:focus{
   background:#FFFFFF;
   border-color:#4AB3E6;
   box-shadow:0 0 0 4px rgba(74,179,230,0.15);
+  transform:translateY(-1px);
 }
 
 .remember-box{
@@ -67,7 +74,10 @@ body{
   align-items:center;
   gap:10px;
   justify-content:flex-start;
+  transition:background 0.2s;
 }
+
+.remember-box:hover{background:#E0F2FE}
 
 .remember-box input[type="checkbox"]{
   width:18px;
@@ -86,25 +96,28 @@ body{
 .btn-masuk{
   width:100%;
   padding:18px;
-  background:#4AB3E6;
+  background:linear-gradient(135deg,#4AB3E6,#3A9FD1);
   border:none;
   border-radius:16px;
   font-size:20px;
   font-weight:600;
   color:#FFFFFF;
   cursor:pointer;
-  transition:all 0.2s;
+  transition:all 0.3s;
+  position:relative;
+  overflow:hidden;
 }
 
 .btn-masuk:hover{
-  background:#3A9FD1;
   transform:translateY(-2px);
-  box-shadow:0 6px 20px rgba(74,179,230,0.3);
+  box-shadow:0 8px 24px rgba(74,179,230,0.4);
 }
+
+.btn-masuk:active{transform:translateY(0)}
 
 #error{color:#ef4444;font-size:14px;min-height:20px;margin-bottom:8px}
 
-/* ====== APP TERANG ====== */
+/* ====== APP BERWARNA ====== */
 .container{
   display:none;
   max-width:520px;
@@ -116,47 +129,106 @@ body{
 }
 
 .app-header{
-  background:#FFFFFF;
-  padding:16px 20px;
-  border-radius:0 0 20px 20px;
+  background:linear-gradient(135deg,#4AB3E6,#6366f1);
+  padding:20px;
+  border-radius:0 0 24px 24px;
   margin:0 -20px 20px -20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  box-shadow:0 4px 16px rgba(0,0,0,0.06);
+  box-shadow:0 4px 20px rgba(74,179,230,0.3);
+  position:relative;
+  overflow:hidden;
 }
 
-.app-header h3{font-size:18px;font-weight:600;margin-bottom:2px;color:#1E293B}
-.app-header p{font-size:12px;color:#64748B;opacity:0.8}
+.app-header::before{
+  content:'';
+  position:absolute;
+  top:-50%;
+  right:-10%;
+  width:200px;
+  height:200px;
+  background:rgba(255,255,255,0.1);
+  border-radius:50%;
+}
+
+.app-header h3{font-size:18px;font-weight:700;margin-bottom:2px;color:white;position:relative}
+.app-header p{font-size:12px;color:rgba(255,255,255,0.9);position:relative}
 
 .avatar{
-  width:40px;height:40px;
-  background:#4AB3E6;
+  width:44px;height:44px;
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(10px);
+  border:2px solid rgba(255,255,255,0.4);
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:600;
+  font-weight:700;
   font-size:16px;
   color:white;
+  position:relative;
+}
+
+.hero-card{
+  background:linear-gradient(135deg,#FFFFFF,#F0F8FF);
+  padding:20px;
+  border-radius:20px;
+  margin-bottom:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.06);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-card::after{
+  content:'🦷';
+  position:absolute;
+  font-size:80px;
+  opacity:0.05;
+  right:10px;
+  bottom:-10px;
+}
+
+.hero-card h4{
+  font-size:16px;
+  color:#1E293B;
+  margin-bottom:6px;
+  font-weight:600;
+}
+
+.hero-card p{
+  font-size:13px;
+  color:#64748B;
 }
 
 .form-box{
   background:#FFFFFF;
   padding:22px;
-  border-radius:16px;
+  border-radius:20px;
   margin-bottom:15px;
   box-shadow:0 4px 16px rgba(0,0,0,0.06);
+  border:1px solid #F1F5F9;
 }
 
 .section-title{
   font-size:14px;
-  font-weight:600;
-  color:#334155;
+  font-weight:700;
+  color:#1E293B;
   margin-bottom:12px;
   display:flex;
   align-items:center;
   gap:8px;
+}
+
+.badge{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:600;
+  background:#EDF6F9;
+  color:#4AB3E6;
 }
 
 select,input:not(.login-input){
@@ -165,38 +237,53 @@ select,input:not(.login-input){
   margin:8px 0;
   border-radius:12px;
   font-size:15px;
-  border:2px solid #EDF6F9;
+  border:2px solid #E2E8F0;
   outline:none;
   background:#FFFFFF;
   color:#334155;
-  transition:all 0.2s;
+  transition:all 0.3s;
+  cursor:pointer;
+}
+
+select:hover,input:not(.login-input):hover{
+  border-color:#CBD5E1;
 }
 
 select:focus,input:not(.login-input):focus{
   border-color:#4AB3E6;
   box-shadow:0 0 0 4px rgba(74,179,230,0.1);
+  transform:translateY(-1px);
 }
 
-label{font-size:13px;margin-top:10px;display:block;color:#475569}
+label{
+  font-size:13px;
+  margin-top:10px;
+  display:block;
+  color:#475569;
+  font-weight:500;
+}
 
 .btn-primary{
   width:100%;
-  padding:14px;
+  padding:16px;
   margin-top:10px;
-  border-radius:12px;
+  border-radius:14px;
   font-size:15px;
   border:none;
   background:linear-gradient(135deg,#22c55e,#16a34a);
   color:white;
-  font-weight:bold;
+  font-weight:700;
   cursor:pointer;
-  transition:all 0.2s;
+  transition:all 0.3s;
+  box-shadow:0 4px 16px rgba(34,197,94,0.3);
 }
 
 .btn-primary:hover{
-  transform:scale(1.02);
-  box-shadow:0 5px 15px rgba(34,197,94,0.3);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(34,197,94,0.4);
 }
+
+.btn-primary:active{transform:translateY(0)}
 
 .quick-actions{
   display:flex;
@@ -208,18 +295,20 @@ label{font-size:13px;margin-top:10px;display:block;color:#475569}
   flex:1;
   padding:12px;
   border-radius:12px;
-  border:2px solid #EDF6F9;
+  border:2px solid #E2E8F0;
   background:#FFFFFF;
   color:#475569;
   font-size:13px;
-  font-weight:500;
+  font-weight:600;
   cursor:pointer;
-  transition:all 0.2s;
+  transition:all 0.3s;
 }
 
 .btn-secondary:hover{
-  background:#EDF6F9;
+  background:#F8FAFC;
   border-color:#4AB3E6;
+  color:#4AB3E6;
+  transform:translateY(-1px);
 }
 
 .tabs{
@@ -228,25 +317,34 @@ label{font-size:13px;margin-top:10px;display:block;color:#475569}
   margin-top:20px;
   margin-bottom:12px;
   overflow-x:auto;
+  padding:4px;
+  background:#F8FAFC;
+  border-radius:14px;
 }
 
 .tab-btn{
   padding:10px 16px;
   border:none;
-  background:#EDF6F9;
-  color:#475569;
-  border-radius:12px;
+  background:transparent;
+  color:#64748B;
+  border-radius:10px;
   font-size:14px;
-  font-weight:500;
+  font-weight:600;
   cursor:pointer;
   white-space:nowrap;
-  transition:all 0.2s;
+  transition:all 0.3s;
+  flex:1;
+}
+
+.tab-btn:hover{
+  background:rgba(74,179,230,0.1);
+  color:#4AB3E6;
 }
 
 .tab-btn.active{
-  background:#4AB3E6;
-  color:white;
-  font-weight:600;
+  background:#FFFFFF;
+  color:#4AB3E6;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
 .tab-content{display:none;animation:fadeIn 0.3s ease}
@@ -259,31 +357,44 @@ label{font-size:13px;margin-top:10px;display:block;color:#475569}
 
 .card{
   background:#FFFFFF;
-  padding:15px;
-  border-radius:12px;
+  padding:18px;
+  border-radius:14px;
   margin-top:10px;
   color:#1E293B;
-  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  border:1px solid #F1F5F9;
+  transition:all 0.3s;
 }
 
-.blue{border-left:6px solid #4AB3E6}
-.green{border-left:6px solid #22c55e}
-.red{border-left:6px solid #ef4444}
-.orange{border-left:6px solid #f97316}
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);
+}
+
+.blue{border-left:4px solid #4AB3E6}
+.green{border-left:4px solid #22c55e}
+.red{border-left:4px solid #ef4444}
+.orange{border-left:4px solid #f97316}
 .hidden{display:none}
-pre{white-space:pre-wrap;font-family:inherit}
+pre{white-space:pre-wrap;font-family:inherit;line-height:1.6}
 
 .logout-btn{
-  background:#ef4444;
-  color:white;
-  padding:6px 12px;
+  background:rgba(239,68,68,0.1);
+  color:#ef4444;
+  padding:8px 14px;
   border:none;
-  border-radius:8px;
+  border-radius:10px;
   font-size:12px;
+  font-weight:600;
   cursor:pointer;
+  transition:all 0.3s;
 }
 
-.logout-btn:hover{background:#dc2626}
+.logout-btn:hover{
+  background:#ef4444;
+  color:white;
+  transform:scale(1.05);
+}
 
 #popup{
   position:fixed;
@@ -293,14 +404,22 @@ pre{white-space:pre-wrap;font-family:inherit}
   justify-content:center;
   align-items:center;
   z-index:9999;
+  backdrop-filter:blur(4px);
 }
 #popup div{
   background:white;
-  padding:25px;
-  border-radius:16px;
+  padding:30px;
+  border-radius:20px;
   text-align:center;
-  width:280px;
+  width:300px;
   color:#1E293B;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+  animation:popIn 0.3s ease;
+}
+
+@keyframes popIn{
+  from{opacity:0;transform:scale(0.9)}
+  to{opacity:1;transform:scale(1)}
 }
 </style>
 </head>
@@ -332,9 +451,17 @@ pre{white-space:pre-wrap;font-family:inherit}
     <div class="avatar" id="avatar">D</div>
   </div>
 
+  <div class="hero-card">
+    <h4>Selamat Datang Kembali!</h4>
+    <p>Siap membuat resep untuk pasien hari ini?</p>
+  </div>
+
   <div class="form-box">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <div class="section-title">🦷 Buat Resep</div>
+      <div class="section-title">
+        🦷 Buat Resep 
+        <span class="badge">Baru</span>
+      </div>
       <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
     
@@ -357,7 +484,7 @@ pre{white-space:pre-wrap;font-family:inherit}
     <label>Pilih Obat</label>
     <select id="obat"></select>
 
-    <button onclick="run()" class="btn-primary">PROSES</button>
+    <button onclick="run()" class="btn-primary">PROSES RESEP</button>
     
     <div class="quick-actions">
       <button class="btn-secondary" onclick="copyResep()">📋 Salin Resep</button>
@@ -370,9 +497,9 @@ pre{white-space:pre-wrap;font-family:inherit}
 
 <div id="popup">
   <div>
-    <h3>⏰ Session Expired</h3>
-    <p>Silakan login kembali</p>
-    <button onclick="closePopup()" style="margin-top:10px;padding:10px;width:100%;background:#ef4444;color:white;border:none;border-radius:10px;">OK</button>
+    <h3 style="margin-bottom:8px">⏰ Session Expired</h3>
+    <p style="color:#64748B;margin-bottom:16px">Silakan login kembali</p>
+    <button onclick="closePopup()" style="padding:12px;width:100%;background:#4AB3E6;color:white;border:none;border-radius:12px;font-weight:600;">OK</button>
   </div>
 </div>
 
