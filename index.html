@@ -205,6 +205,15 @@ pre{white-space:pre-wrap}
 </div>
 
 <div id="out"></div>
+<footer id="copyright" style="
+text-align:center;
+font-size:12px;
+color:#e2e8f0;
+margin-top:40px;
+padding:20px 0;
+opacity:0.7;
+border-top:1px solid rgba(255,255,255,0.1);
+"></footer>
 
 </div>
 
@@ -356,6 +365,16 @@ function resetForm(){
 }
 
 </script>
+<script>
+window.onload = function(){
+  checkLogin();
 
+  // copyright auto
+  const el = document.getElementById("copyright");
+  if(el){
+    el.innerText = "© " + new Date().getFullYear() + " Dental App • Developed by Ale Saputra";
+  }
+};
+</script>
 </body>
 </html>
