@@ -57,6 +57,12 @@ body{
   cursor:pointer;
 }
 
+#error{
+  color:red;
+  margin-top:10px;
+  min-height:20px;
+}
+
 /* APP */
 .container{
   display:none;
@@ -120,8 +126,6 @@ select,input{
 
 .blue{border-left:5px solid #3b82f6}
 .green{border-left:5px solid #22c55e}
-.red{border-left:5px solid #ef4444}
-.orange{border-left:5px solid orange}
 
 .logout{
   background:#ef4444;
@@ -143,7 +147,7 @@ select,input{
     <input id="user" class="login-input" placeholder="Username">
     <input id="pass" type="password" class="login-input" placeholder="Password">
     <button onclick="login()" class="btn">Masuk</button>
-    <p id="error" style="color:red;margin-top:10px;"></p>
+    <div id="error"></div>
   </div>
 </div>
 
@@ -185,51 +189,73 @@ select,input{
 </div>
 
 <script>
+// USER LOGIN
+const users = [
+  {username:"dokter", password:"dokter24"},
+  {username:"admin", password:"klinik24"},
+  {username:"asisten", password:"babu24"}
+];
+
+function login(){
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+
+  let found = users.find(user => user.username === u && user.password === p);
+
+  if(found){
+    document.getElementById("login").style.display="none";
+    document.getElementById("app").style.display="block";
+    document.getElementById("greeting").innerText = "Halo, " + u + " 👋";
+    setDate();
+    loadObat();
+  } else {
+    document.getElementById("error").innerText="Username atau password salah!";
+  }
+}
+
+function logout(){
+  document.getElementById("login").style.display="flex";
+  document.getElementById("app").style.display="none";
+}
+
+// DATE
+function setDate(){
+  let d = new Date();
+  document.getElementById("date").innerText = d.toDateString();
+}
+
+// DATA OBAT
 const data={
 analgesik:["Paracetamol","Ibuprofen"],
 antibiotik:["Amoxicillin"]
 };
 
-function login(){
-  let u=user.value,p=pass.value;
-  if(u=="dokter"&&p=="123"){
-    loginBox.style.display="none";
-    app.style.display="block";
-    setDate();
-    loadObat();
-  }else{
-    error.innerText="Login salah";
-  }
-}
-
-function logout(){
-  loginBox.style.display="flex";
-  app.style.display="none";
-}
-
-function setDate(){
-  date.innerText=new Date().toLocaleDateString();
-}
-
 function toggleBB(){
-  bb.style.display=mode.value=="anak"?"block":"none";
+  let mode=document.getElementById("mode").value;
+  document.getElementById("bb").style.display = mode=="anak"?"block":"none";
 }
 
 function loadObat(){
-  obat.innerHTML="";
-  data[kategori.value].forEach(o=>{
+  let kat=document.getElementById("kategori").value;
+  let select=document.getElementById("obat");
+  select.innerHTML="";
+  data[kat].forEach(o=>{
     let opt=document.createElement("option");
     opt.text=o;
-    obat.add(opt);
+    select.add(opt);
   });
 }
 
 function run(){
-  out.innerHTML=`
-  <div class="card blue"><b>Dosis:</b> 500 mg</div>
-  <div class="card green"><b>Resep:</b> Paracetamol</div>
+  document.getElementById("out").innerHTML=`
+    <div class="card blue"><b>Dosis:</b> 500 mg</div>
+    <div class="card green"><b>Resep:</b> Obat diberikan sesuai indikasi</div>
   `;
 }
+
+window.onload=function(){
+  loadObat();
+};
 </script>
 
 </body>
