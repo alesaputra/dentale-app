@@ -3,23 +3,23 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dental App</title>
-<link href="https:                                                                                             
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   font-family:'Inter',Arial,sans-serif;
   min-height:100vh;
-  background:linear-gradient(180deg,                         
+  background:linear-gradient(180deg,#F0F8FF 0%,#FFFFFF 100%);
   background-attachment:fixed;
 }
 
-                         
-       
+/* ====== LOGIN ====== */
+#login{
   display:flex;
   height:100vh;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(180deg,                         
+  background:linear-gradient(180deg,#F0F8FF 0%,#FFFFFF 100%);
   position:fixed;
   top:0;left:0;width:100%;
   z-index:9999;
@@ -27,7 +27,7 @@ body{
 }
 
 .login-card{
-  background:        
+  background:#FFFFFF;
   width:100%;
   max-width:360px;
   padding:32px 24px;
@@ -42,24 +42,24 @@ body{
 .logo{font-size:42px;margin-bottom:12px;animation:float 3s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
-.login-card h2{font-size:20px;color:                                           
+.login-card h2{font-size:20px;color:#1E293B;margin-bottom:28px;font-weight:600}
 
 .login-input{
   width:100%;
   padding:14px 18px;
-  background:        
+  background:#EDF6F9;
   border:2px solid transparent;
   border-radius:16px;
   font-size:15px;
   margin-bottom:12px;
   outline:none;
-  color:        
+  color:#334155;
   transition:all 0.3s;
 }
 
 .login-input:focus{
-  background:        
-  border-color:        
+  background:#FFFFFF;
+  border-color:#4AB3E6;
   box-shadow:0 0 0 4px rgba(74,179,230,0.15);
   transform:translateY(-1px);
 }
@@ -67,7 +67,7 @@ body{
 .remember-box{
   width:100%;
   padding:14px 18px;
-  background:        
+  background:#EDF6F9;
   border-radius:16px;
   margin-bottom:20px;
   display:flex;
@@ -77,7 +77,7 @@ body{
   transition:background 0.2s;
 }
 
-.remember-box:hover{background:        
+.remember-box:hover{background:#E0F2FE}
 
 .remember-box input[type="checkbox"]{
   width:18px;
@@ -144,8 +144,10 @@ body{
 .app-header::before{
   content:'';
   position:absolute;
-  top:-50%;right:-10%;
-  width:200px;height:200px;
+  top:-50%;
+  right:-10%;
+  width:200px;
+  height:200px;
   background:rgba(255,255,255,0.1);
   border-radius:50%;
 }
@@ -177,6 +179,7 @@ body{
   text-align:center;
   position:relative;
   overflow:hidden;
+  border:1px solid #E0F2FE;
 }
 
 .hero-card::after{
@@ -246,3 +249,486 @@ select,input:not(.login-input){
 select:hover,input:not(.login-input):hover{
   border-color:#CBD5E1;
 }
+
+select:focus,input:not(.login-input):focus{
+  border-color:#4AB3E6;
+  box-shadow:0 0 0 4px rgba(74,179,230,0.1);
+  transform:translateY(-1px);
+}
+
+label{
+  font-size:13px;
+  margin-top:10px;
+  display:block;
+  color:#475569;
+  font-weight:500;
+}
+
+.btn-primary{
+  width:100%;
+  padding:16px;
+  margin-top:10px;
+  border-radius:14px;
+  font-size:15px;
+  border:none;
+  background:linear-gradient(135deg,#4AB3E6,#3A9FD1);
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+  transition:all 0.3s;
+  box-shadow:0 4px 16px rgba(74,179,230,0.3);
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(74,179,230,0.4);
+}
+
+.btn-primary:active{transform:translateY(0)}
+
+.quick-actions{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+}
+
+.btn-secondary{
+  flex:1;
+  padding:12px;
+  border-radius:12px;
+  border:2px solid #E2E8F0;
+  background:#FFFFFF;
+  color:#475569;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.3s;
+}
+
+.btn-secondary:hover{
+  background:#F8FAFC;
+  border-color:#4AB3E6;
+  color:#4AB3E6;
+  transform:translateY(-1px);
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  margin-top:20px;
+  margin-bottom:12px;
+  overflow-x:auto;
+  padding:4px;
+  background:#F8FAFC;
+  border-radius:14px;
+}
+
+.tab-btn{
+  padding:10px 16px;
+  border:none;
+  background:transparent;
+  color:#64748B;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all 0.3s;
+  flex:1;
+}
+
+.tab-btn:hover{
+  background:rgba(74,179,230,0.1);
+  color:#4AB3E6;
+}
+
+.tab-btn.active{
+  background:#FFFFFF;
+  color:#4AB3E6;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.tab-content{display:none;animation:fadeIn 0.3s ease}
+.tab-content.active{display:block}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.card{
+  background:#FFFFFF;
+  padding:18px;
+  border-radius:14px;
+  margin-top:10px;
+  color:#1E293B;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  border:1px solid #F1F5F9;
+  transition:all 0.3s;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);
+}
+
+.blue{border-left:4px solid #4AB3E6}
+.green{border-left:4px solid #22c55e}
+.red{border-left:4px solid #ef4444}
+.orange{border-left:4px solid #f97316}
+.hidden{display:none}
+pre{white-space:pre-wrap;font-family:inherit;line-height:1.6}
+
+.logout-btn{
+  background:rgba(239,68,68,0.1);
+  color:#ef4444;
+  padding:8px 14px;
+  border:none;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.3s;
+}
+
+.logout-btn:hover{
+  background:#ef4444;
+  color:white;
+  transform:scale(1.05);
+}
+
+#popup{
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.5);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  backdrop-filter:blur(4px);
+}
+#popup div{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+  width:300px;
+  color:#1E293B;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+  animation:popIn 0.3s ease;
+}
+
+@keyframes popIn{
+  from{opacity:0;transform:scale(0.9)}
+  to{opacity:1;transform:scale(1)}
+}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <div class="login-card">
+    <div class="logo">🦷</div>
+    <h2>Dental App</h2>
+    <input type="text" id="user" class="login-input" placeholder="Username">
+    <input type="password" id="pass" class="login-input" placeholder="Password">
+
+    <div class="remember-box">
+      <input type="checkbox" id="remember">
+      <label for="remember">Tetap login</label>
+    </div>
+
+    <div id="error"></div>
+    <button onclick="login()" class="btn-masuk">Masuk</button>
+  </div>
+</div>
+
+<div class="container" id="app">
+  <div class="app-header">
+    <div>
+      <h3 id="greeting">Halo, Dokter 👋</h3>
+      <p id="todayDate"></p>
+    </div>
+    <div class="avatar" id="avatar">D</div>
+  </div>
+
+  <div class="hero-card">
+    <h4>Selamat Datang Kembali!</h4>
+    <p>Siap membuat resep untuk pasien hari ini?</p>
+  </div>
+
+  <div class="form-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div class="section-title">
+        🦷 Buat Resep
+        <span class="badge">Baru</span>
+      </div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <label>Mode Pasien</label>
+    <select id="mode" onchange="toggleBB()">
+      <option value="dewasa">Dewasa</option>
+      <option value="anak">Anak</option>
+    </select>
+
+    <label>Berat Badan (Mode Pasien Anak)</label>
+    <input id="bb" class="hidden" placeholder="Contoh: 20 (Kg)">
+
+    <label>Kategori Obat</label>
+    <select id="kategori" onchange="loadObat()">
+      <option value="analgesik">Analgesik</option>
+      <option value="antibiotik">Antibiotik</option>
+      <option value="lain">Lain-lain</option>
+    </select>
+
+    <label>Pilih Obat</label>
+    <select id="obat"></select>
+
+    <button onclick="run()" class="btn-primary">PROSES RESEP</button>
+
+    <div class="quick-actions">
+      <button class="btn-secondary" onclick="copyResep()">📋 Salin Resep</button>
+      <button class="btn-secondary" onclick="resetForm()">🔄 Reset</button>
+    </div>
+  </div>
+
+  <div id="out"></div>
+</div>
+
+<div id="popup">
+  <div>
+    <h3 style="margin-bottom:8px">⏰ Session Expired</h3>
+    <p style="color:#64748B;margin-bottom:16px">Silakan login kembali</p>
+    <button onclick="closePopup()" style="padding:12px;width:100%;background:#4AB3E6;color:white;border:none;border-radius:12px;font-weight:600;">OK</button>
+  </div>
+</div>
+
+<script>
+const data={
+analgesik:["Paracetamol","Ibuprofen","Mefenamic Acid","Diclofenac K","Ketorolac","Tramadol"],
+antibiotik:["Amoxicillin","Amoxiclav","Cefadroxil","Cefixime","Clindamycin","Metronidazole","Azithromycin"],
+lain:["Metylprednisolone","Omeprazole"]
+};
+
+let currentResep="";
+let currentUser="";
+
+function setDate(){
+  const days=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  const months=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const d=new Date();
+  document.getElementById('todayDate').innerText=`${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+const users=[
+  {username:"dokter",password:"dokter24",name:"Dokter"},
+  {username:"admin",password:"klinik24",name:"Admin"},
+  {username:"asisten",password:"babu24",name:"Asisten"}
+];
+
+function login(){
+  let user=document.getElementById("user").value;
+  let pass=document.getElementById("pass").value;
+  let remember=document.getElementById("remember").checked;
+  let found=users.find(u=>u.username===user&&u.password===pass);
+
+  if(found){
+    currentUser=found.name;
+    localStorage.setItem("username",currentUser);
+    document.getElementById("greeting").innerText=`Halo, ${currentUser} 👋`;
+    document.getElementById("avatar").innerText=currentUser.charAt(0).toUpperCase();
+
+    let now=new Date().getTime();
+    if(remember){
+      localStorage.setItem("login","true");
+      localStorage.setItem("loginTime",now);
+    }else{
+      sessionStorage.setItem("login","true");
+    }
+
+    document.getElementById("login").style.display="none";
+    document.getElementById("app").style.display="block";
+    setDate();
+    loadObat();
+  }else{
+    document.getElementById("error").innerText="Username atau password salah!";
+  }
+}
+
+function logout(){
+  localStorage.removeItem("login");
+  localStorage.removeItem("loginTime");
+  sessionStorage.removeItem("login");
+  document.getElementById("login").style.display="flex";
+  document.getElementById("app").style.display="none";
+  document.getElementById("user").value="";
+  document.getElementById("pass").value="";
+  document.getElementById("error").innerText="";
+}
+
+function checkLogin(){
+  let isLogin=localStorage.getItem("login");
+  let loginTime=localStorage.getItem("loginTime");
+
+  if(isLogin==="true"&&loginTime){
+    let now=new Date().getTime();
+    let diff=now-loginTime;
+    let batas=24*60*60*1000;
+    if(diff<batas){
+      document.getElementById("login").style.display="none";
+      document.getElementById("app").style.display="block";
+      currentUser=localStorage.getItem("username")||"Dokter";
+      document.getElementById("greeting").innerText=`Halo, ${currentUser} 👋`;
+      document.getElementById("avatar").innerText=currentUser.charAt(0).toUpperCase();
+      setDate();
+      loadObat();
+      return;
+    }else{
+      localStorage.removeItem("login");
+      localStorage.removeItem("loginTime");
+      showPopup();
+    }
+  }
+
+  if(sessionStorage.getItem("login")==="true"){
+    document.getElementById("login").style.display="none";
+    document.getElementById("app").style.display="block";
+    setDate();
+    loadObat();
+  }
+}
+
+function toggleBB(){
+  let mode=document.getElementById("mode").value;
+  let bb=document.getElementById("bb");
+  mode=="anak"?bb.classList.remove("hidden"):bb.classList.add("hidden");
+}
+
+function loadObat(){
+  let kat=document.getElementById("kategori").value;
+  let select=document.getElementById("obat");
+  select.innerHTML="";
+  data[kat].forEach(o=>{
+    let opt=document.createElement("option");
+    opt.text=o;
+    select.add(opt);
+  });
+}
+
+function run(){
+  let mode=document.getElementById("mode").value;
+  let bb=parseFloat(document.getElementById("bb").value||0);
+  let obat=document.getElementById("obat").value;
+  let dosis="",resep="",indikasi="",kontra="",merk="",kie="";
+
+  const dewasa={
+    "Paracetamol":["500 mg 3-4x","R/ Paracetamol 500 mg\nS: 3 dd 1","Nyeri ringan","Hati","Sanmol","Boleh sebelum/sesudah makan"],
+    "Ibuprofen":["400 mg 3x","R/ Ibuprofen 400 mg\nS: 3 dd 1 p.c","Inflamasi","Gastritis","Proris","Setelah makan"],
+    "Mefenamic Acid":["500 mg 3x","R/ Mefenamic acid 500 mg\nS: 3 dd 1","Nyeri sedang","Gastritis","Ponstan","Jangan saat perut kosong"],
+    "Diclofenac K":["50 mg 2-3x","R/ Diclofenac K 50 mg\nS: 2 dd 1","Nyeri kuat","Ulkus","Cataflam","Setelah makan"],
+    "Ketorolac":["10 mg 3x","R/ Ketorolac 10 mg\nS: 3 dd 1","Nyeri berat","Ginjal","Toradol","Max 5 hari"],
+    "Tramadol":["50 mg 2-3x","R/ Tramadol 50 mg\nS: 2 dd 1","Nyeri berat","Ketergantungan","Tramal","Mengantuk"],
+    "Amoxicillin":["500 mg 3x","R/ Amoxicillin 500 mg\nS: 3 dd 1","Infeksi","Alergi","Amoxil","Habiskan"],
+    "Amoxiclav":["625 mg 3x","R/ Amoxiclav 625 mg\nS: 3 dd 1","Infeksi berat","Alergi","Augmentin","Setelah makan"],
+    "Cefadroxil":["500 mg 2x","R/ Cefadroxil 500 mg\nS: 2 dd 1","Infeksi","Alergi","Duricef","Habiskan"],
+    "Cefixime":["200 mg 2x","R/ Cefixime 200 mg\nS: 2 dd 1","Infeksi berat","Alergi","Suprax","Habiskan"],
+    "Clindamycin":["300 mg 3x","R/ Clindamycin 300 mg\nS: 3 dd 1","Alergi penisilin","Diare","Dalacin","Stop jika diare"],
+    "Metronidazole":["500 mg 3x","R/ Metronidazole 500 mg\nS: 3 dd 1","Anaerob","Alkohol","Flagyl","Tidak boleh alkohol"],
+    "Azithromycin":["500 mg 1x","R/ Azithromycin 500 mg\nS: 1 dd 1","Alternatif","Hati","Zithromax","Sebelum makan"],
+    "Metylprednisolone":["4 mg 3x","R/ Metylprednisolone 4 mg\nS: 3 dd 1","Inflamasi","Infeksi aktif","Medrol","Jangka pendek"],
+    "Omeprazole":["20 mg 1x","R/ Omeprazole 20 mg\nS: 1 dd 1 a.c","Gastritis","Hipersensitif","Losec","Sebelum makan"]
+  };
+
+  const maxBB=40;
+  if(mode=="anak"&&bb>0){
+    let w=bb>maxBB?maxBB:bb;
+    let over=bb>maxBB;
+    const anak={
+      "Paracetamol":[(w*0.5).toFixed(1)+" mL","R/ Paracetamol syr\nS: 3 dd "+(w*0.5).toFixed(1)+" mL","Demam","Hati","Sanmol Syr",""],
+      "Ibuprofen":[(w*0.25).toFixed(1)+" mL","R/ Ibuprofen syr\nS: 3 dd "+(w*0.25).toFixed(1)+" mL","Nyeri","Gastritis","Proris Syr","Setelah makan"],
+      "Amoxicillin":[(w*0.4).toFixed(1)+" mL","R/ Amoxicillin syr\nS: 3 dd "+(w*0.4).toFixed(1)+" mL","Infeksi","Alergi","Amoxil Syr","Habiskan"],
+      "Cefadroxil":[(w*0.6).toFixed(1)+" mL","R/ Cefadroxil syr\nS: 2 dd "+(w*0.6).toFixed(1)+" mL","Infeksi","Alergi","Duricef Syr","Habiskan"],
+      "Metronidazole":[(w*0.3).toFixed(1)+" mL","R/ Metronidazole syr\nS: 3 dd "+(w*0.3).toFixed(1)+" mL","Anaerob","Alkohol","Flagyl Syr","Hindari alkohol"]
+    };
+    if(anak){
+      [dosis,resep,indikasi,kontra,merk,kie]=anak;
+      if(over)kie="BB > 40 kg → gunakan dosis maksimal anak";
+    }else{
+      dosis="-";resep="-";indikasi="-";kontra="-";merk="-";kie="Tidak dianjurkan untuk anak";
+    }
+  }else if(mode=="dewasa"&&dewasa){
+    [dosis,resep,indikasi,kontra,merk,kie]=dewasa;
+  }else{
+    dosis="-";resep="-";indikasi="-";kontra="-";merk="-";kie="-";
+  }
+
+  currentResep=resep;
+
+  document.getElementById("out").innerHTML=`
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab(event,'dosis')">Dosis</button>
+    <button class="tab-btn" onclick="showTab(event,'resep')">Resep</button>
+    <button class="tab-btn" onclick="showTab(event,'kie')">KIE</button>
+    <button class="tab-btn" onclick="showTab(event,'info')">Info</button>
+  </div>
+  <div id="tab-dosis" class="tab-content active">
+    <div class="card blue"><b>Dosis:</b><br>${dosis}</div>
+  </div>
+  <div id="tab-resep" class="tab-content">
+    <div class="card green"><b>Resep:</b><pre>${resep}</pre></div>
+  </div>
+  <div id="tab-kie" class="tab-content">
+    <div class="card orange"><b>NB (KIE):</b><br>${kie}</div>
+  </div>
+  <div id="tab-info" class="tab-content">
+    <div class="card green"><b>Indikasi:</b><br>${indikasi}</div>
+    <div class="card red"><b>Kontraindikasi:</b><br>${kontra}</div>
+    <div class="card blue"><b>Merk:</b><br>${merk}</div>
+  </div>
+  `;
+}
+
+function showTab(e,tabName){
+  document.querySelectorAll('.tab-content').forEach(tab=>{
+    tab.classList.remove('active');
+  });
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.classList.remove('active');
+  });
+  document.getElementById('tab-'+tabName).classList.add('active');
+  e.target.classList.add('active');
+}
+
+function copyResep(){
+  if(!currentResep){
+    alert('Belum ada resep. Klik PROSES dulu.');
+    return;
+  }
+  navigator.clipboard.writeText(currentResep);
+  event.target.innerText='✅ Tersalin!';
+  setTimeout(()=>{
+    event.target.innerText='📋 Salin Resep';
+  },2000);
+}
+
+function resetForm(){
+  document.getElementById("bb").value="";
+  document.getElementById("out").innerHTML="";
+  currentResep="";
+}
+
+function showPopup(){
+  document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+}
+
+window.onload=function(){
+  checkLogin();
+};
+</script>
+</body>
+</html>
