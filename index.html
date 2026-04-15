@@ -12,7 +12,6 @@
 body{
   font-family:'Inter',Arial,sans-serif;
   background: linear-gradient(135deg,#F0F8FF,#E0F2FE,#BAE6FD);
-  min-height:100vh;
 }
 
 /* LOGIN */
@@ -24,26 +23,21 @@ body{
 }
 
 .login-card{
-  background:#FFFFFF;
+  background:#fff;
   padding:30px;
+  border-radius:20px;
   width:100%;
   max-width:360px;
-  border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
   text-align:center;
-}
-
-.login-card h2{
-  margin-bottom:20px;
-  color:#1E293B;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
 }
 
 .login-input{
   width:100%;
   padding:14px;
+  margin:10px 0;
   border-radius:12px;
   border:1px solid #ddd;
-  margin-bottom:12px;
 }
 
 .btn{
@@ -57,12 +51,6 @@ body{
   cursor:pointer;
 }
 
-#error{
-  color:red;
-  margin-top:10px;
-  min-height:20px;
-}
-
 /* APP */
 .container{
   display:none;
@@ -73,18 +61,17 @@ body{
 }
 
 .app-header{
-  background:#FFFFFF;
+  background:#fff;
   padding:16px;
   border-radius:16px;
   margin-bottom:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.05);
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
 }
 
 .form-box{
-  background:#FFFFFF;
+  background:#fff;
   padding:20px;
   border-radius:16px;
   box-shadow:0 4px 10px rgba(0,0,0,0.05);
@@ -94,7 +81,6 @@ label{
   font-size:13px;
   margin-top:10px;
   display:block;
-  color:#334155;
 }
 
 select,input{
@@ -116,8 +102,23 @@ select,input{
   font-weight:bold;
 }
 
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.btn-secondary{
+  flex:1;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  background:#f1f5f9;
+  cursor:pointer;
+}
+
 .card{
-  background:#FFFFFF;
+  background:#fff;
   padding:15px;
   border-radius:12px;
   margin-top:10px;
@@ -126,14 +127,15 @@ select,input{
 
 .blue{border-left:5px solid #3b82f6}
 .green{border-left:5px solid #22c55e}
+.red{border-left:5px solid #ef4444}
+.orange{border-left:5px solid orange}
 
 .logout{
   background:#ef4444;
   color:white;
-  padding:6px 10px;
   border:none;
+  padding:6px 10px;
   border-radius:8px;
-  cursor:pointer;
 }
 </style>
 </head>
@@ -147,7 +149,7 @@ select,input{
     <input id="user" class="login-input" placeholder="Username">
     <input id="pass" type="password" class="login-input" placeholder="Password">
     <button onclick="login()" class="btn">Masuk</button>
-    <div id="error"></div>
+    <p id="error" style="color:red;"></p>
   </div>
 </div>
 
@@ -156,10 +158,10 @@ select,input{
 
   <div class="app-header">
     <div>
-      <b id="greeting">Halo, Dokter 👋</b><br>
+      <b id="greeting">Halo 👋</b><br>
       <small id="date"></small>
     </div>
-    <button class="logout" onclick="logout()">Logout</button>
+    <button onclick="logout()" class="logout">Logout</button>
   </div>
 
   <div class="form-box">
@@ -176,12 +178,18 @@ select,input{
     <select id="kategori" onchange="loadObat()">
       <option value="analgesik">Analgesik</option>
       <option value="antibiotik">Antibiotik</option>
+      <option value="lain">Lain</option>
     </select>
 
     <label>Obat</label>
     <select id="obat"></select>
 
     <button onclick="run()" class="btn-primary">PROSES</button>
+
+    <div class="actions">
+      <button onclick="copyResep()" class="btn-secondary">📋 Salin</button>
+      <button onclick="resetForm()" class="btn-secondary">🔄 Reset</button>
+    </div>
   </div>
 
   <div id="out"></div>
@@ -189,73 +197,138 @@ select,input{
 </div>
 
 <script>
-// USER LOGIN
-const users = [
-  {username:"dokter", password:"dokter24"},
-  {username:"admin", password:"klinik24"},
-  {username:"asisten", password:"babu24"}
+// LOGIN
+const users=[
+  {username:"dokter",password:"dokter24"},
+  {username:"admin",password:"klinik24"},
+  {username:"asisten",password:"babu24"}
 ];
 
 function login(){
-  let u = document.getElementById("user").value;
-  let p = document.getElementById("pass").value;
-
-  let found = users.find(user => user.username === u && user.password === p);
+  let u=user.value;
+  let p=pass.value;
+  let found=users.find(x=>x.username===u&&x.password===p);
 
   if(found){
-    document.getElementById("login").style.display="none";
-    document.getElementById("app").style.display="block";
-    document.getElementById("greeting").innerText = "Halo, " + u + " 👋";
+    login.style.display="none";
+    app.style.display="block";
+    greeting.innerText="Halo, "+u+" 👋";
     setDate();
     loadObat();
-  } else {
-    document.getElementById("error").innerText="Username atau password salah!";
+  }else{
+    error.innerText="Login salah!";
   }
 }
 
 function logout(){
-  document.getElementById("login").style.display="flex";
-  document.getElementById("app").style.display="none";
+  login.style.display="flex";
+  app.style.display="none";
 }
 
-// DATE
 function setDate(){
-  let d = new Date();
-  document.getElementById("date").innerText = d.toDateString();
+  date.innerText=new Date().toDateString();
 }
 
 // DATA OBAT
 const data={
-analgesik:["Paracetamol","Ibuprofen"],
-antibiotik:["Amoxicillin"]
+analgesik:["Paracetamol","Ibuprofen","Mefenamic Acid","Diclofenac K","Ketorolac","Tramadol"],
+antibiotik:["Amoxicillin","Amoxiclav","Cefadroxil","Cefixime","Clindamycin","Metronidazole","Azithromycin"],
+lain:["Metylprednisolone","Omeprazole"]
 };
 
+let currentResep="";
+
 function toggleBB(){
-  let mode=document.getElementById("mode").value;
-  document.getElementById("bb").style.display = mode=="anak"?"block":"none";
+  bb.style.display=mode.value=="anak"?"block":"none";
 }
 
 function loadObat(){
-  let kat=document.getElementById("kategori").value;
-  let select=document.getElementById("obat");
-  select.innerHTML="";
-  data[kat].forEach(o=>{
+  obat.innerHTML="";
+  data[kategori.value].forEach(o=>{
     let opt=document.createElement("option");
     opt.text=o;
-    select.add(opt);
+    obat.add(opt);
   });
 }
 
 function run(){
-  document.getElementById("out").innerHTML=`
-    <div class="card blue"><b>Dosis:</b> 500 mg</div>
-    <div class="card green"><b>Resep:</b> Obat diberikan sesuai indikasi</div>
-  `;
+let modeVal=mode.value;
+let bbVal=parseFloat(bb.value||0);
+let obatVal=obat.value;
+
+let dosis="",resep="",indikasi="",kontra="",merk="",kie="";
+
+// DEWASA
+const dewasa={
+"Paracetamol":["500 mg 3-4x","R/ Paracetamol 500 mg\nS: 3 dd 1","Nyeri ringan","Hati","Sanmol","Boleh sebelum/sesudah makan"],
+"Ibuprofen":["400 mg 3x","R/ Ibuprofen 400 mg\nS: 3 dd 1 p.c","Inflamasi","Gastritis","Proris","Setelah makan"],
+"Mefenamic Acid":["500 mg 3x","R/ Mefenamic acid 500 mg\nS: 3 dd 1","Nyeri sedang","Gastritis","Ponstan","Jangan saat perut kosong"],
+"Diclofenac K":["50 mg 2-3x","R/ Diclofenac K 50 mg\nS: 2 dd 1","Nyeri kuat","Ulkus","Cataflam","Setelah makan"],
+"Ketorolac":["10 mg 3x","R/ Ketorolac 10 mg\nS: 3 dd 1","Nyeri berat","Ginjal","Toradol","Max 5 hari"],
+"Tramadol":["50 mg 2-3x","R/ Tramadol 50 mg\nS: 2 dd 1","Nyeri berat","Ketergantungan","Tramal","Mengantuk"],
+
+"Amoxicillin":["500 mg 3x","R/ Amoxicillin 500 mg\nS: 3 dd 1","Infeksi","Alergi","Amoxil","Habiskan"],
+"Amoxiclav":["625 mg 3x","R/ Amoxiclav 625 mg\nS: 3 dd 1","Infeksi berat","Alergi","Augmentin","Setelah makan"],
+"Cefadroxil":["500 mg 2x","R/ Cefadroxil 500 mg\nS: 2 dd 1","Infeksi","Alergi","Duricef","Habiskan"],
+"Cefixime":["200 mg 2x","R/ Cefixime 200 mg\nS: 2 dd 1","Infeksi berat","Alergi","Suprax","Habiskan"],
+"Clindamycin":["300 mg 3x","R/ Clindamycin 300 mg\nS: 3 dd 1","Alergi penisilin","Diare","Dalacin","Stop jika diare"],
+"Metronidazole":["500 mg 3x","R/ Metronidazole 500 mg\nS: 3 dd 1","Anaerob","Alkohol","Flagyl","Tidak boleh alkohol"],
+"Azithromycin":["500 mg 1x","R/ Azithromycin 500 mg\nS: 1 dd 1","Alternatif","Hati","Zithromax","Sebelum makan"],
+
+"Metylprednisolone":["4 mg 3x","R/ Metylprednisolone 4 mg\nS: 3 dd 1","Inflamasi","Infeksi aktif","Medrol","Jangka pendek"],
+"Omeprazole":["20 mg 1x","R/ Omeprazole 20 mg\nS: 1 dd 1 a.c","Gastritis","Hipersensitif","Losec","Sebelum makan"]
+};
+
+// ANAK
+if(modeVal=="anak" && bbVal>0){
+let w=Math.min(bbVal,40);
+
+const anak={
+"Paracetamol":[(w*0.5).toFixed(1)+" mL","R/ Paracetamol syr\nS: 3 dd "+(w*0.5).toFixed(1)+" mL","Demam","Hati","Sanmol Syr",""],
+"Ibuprofen":[(w*0.25).toFixed(1)+" mL","R/ Ibuprofen syr\nS: 3 dd "+(w*0.25).toFixed(1)+" mL","Nyeri","Gastritis","Proris Syr","Setelah makan"],
+"Amoxicillin":[(w*0.4).toFixed(1)+" mL","R/ Amoxicillin syr\nS: 3 dd "+(w*0.4).toFixed(1)+" mL","Infeksi","Alergi","Amoxil Syr","Habiskan"],
+"Cefadroxil":[(w*0.6).toFixed(1)+" mL","R/ Cefadroxil syr\nS: 2 dd "+(w*0.6).toFixed(1)+" mL","Infeksi","Alergi","Duricef Syr","Habiskan"],
+"Metronidazole":[(w*0.3).toFixed(1)+" mL","R/ Metronidazole syr\nS: 3 dd "+(w*0.3).toFixed(1)+" mL","Anaerob","Alkohol","Flagyl Syr","Hindari alkohol"]
+};
+
+if(anak[obatVal]){
+[dosis,resep,indikasi,kontra,merk,kie]=anak[obatVal];
+}else{
+kie="Tidak dianjurkan untuk anak";
+}
 }
 
-window.onload=function(){
-  loadObat();
-};
+// DEWASA
+if(modeVal=="dewasa" && dewasa[obatVal]){
+[dosis,resep,indikasi,kontra,merk,kie]=dewasa[obatVal];
+}
+
+currentResep=resep;
+
+// OUTPUT
+out.innerHTML=`
+<div class="card blue"><b>Dosis:</b><br>${dosis}</div>
+<div class="card green"><b>Resep:</b><pre>${resep}</pre></div>
+<div class="card green"><b>Indikasi:</b><br>${indikasi}</div>
+<div class="card red"><b>Kontraindikasi:</b><br>${kontra}</div>
+<div class="card blue"><b>Merk:</b><br>${merk}</div>
+<div class="card orange"><b>KIE:</b><br>${kie}</div>
+`;
+}
+
+function copyResep(){
+if(!currentResep){alert("Belum ada resep");return;}
+navigator.clipboard.writeText(currentResep);
+alert("Resep disalin");
+}
+
+function resetForm(){
+bb.value="";
+out.innerHTML="";
+currentResep="";
+}
+
+window.onload=loadObat;
 </script>
 
 </body>
