@@ -9,9 +9,13 @@
 body{
   font-family:'Inter',Arial,sans-serif;
   min-height:100vh;
-  background:linear-gradient(135deg,#0f172a,#1e3a8a);
+  background:radial-gradient(circle at 20% 30%,#38bdf8 0%,transparent 40%),
+             radial-gradient(circle at 80% 70%,#6366f1 0%,transparent 40%),
+             linear-gradient(135deg,#0f172a,#1e3a8a);
+  background-attachment:fixed;
 }
 
+/* ====== LOGIN ====== */
 #login{
   display:flex;
   height:100vh;
@@ -68,7 +72,149 @@ body{
 
 #error{color:#ef4444;font-size:14px;min-height:20px;margin-bottom:8px}
 
-.container{display:none;padding:20px;color:white;text-align:center}
+/* ====== APP ====== */
+.container{display:none;max-width:520px;margin:auto;color:white;padding:20px;padding-top:0}
+
+.app-header{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(12px);
+  padding:16px 20px;
+  border-radius:0 0 20px 20px;
+  margin:0 -20px 20px -20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.app-header h3{font-size:18px;font-weight:600;margin-bottom:2px}
+.app-header p{font-size:12px;color:#cbd5f5;opacity:0.8}
+
+.avatar{
+  width:40px;height:40px;
+  background:#4AB3E6;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+  font-size:16px;
+}
+
+.form-box{
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(12px);
+  padding:22px;
+  border-radius:16px;
+  margin-bottom:15px;
+}
+
+.section-title{
+  font-size:14px;
+  font-weight:600;
+  color:#e2e8f0;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+select,input:not(.login-input){
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  border-radius:12px;
+  font-size:15px;
+  border:none;
+  outline:none;
+  background:rgba(255,255,255,0.95);
+}
+
+.btn-primary{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border-radius:12px;
+  font-size:15px;
+  border:none;
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.quick-actions{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+}
+
+.btn-secondary{
+  flex:1;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.3);
+  background:rgba(255,255,255,0.1);
+  color:white;
+  font-size:13px;
+  font-weight:500;
+  cursor:pointer;
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  margin-top:20px;
+  margin-bottom:12px;
+  overflow-x:auto;
+}
+
+.tab-btn{
+  padding:10px 16px;
+  border:none;
+  background:rgba(255,255,255,0.2);
+  color:white;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.tab-btn.active{
+  background:white;
+  color:#1E293B;
+  font-weight:600;
+}
+
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+.card{
+  background:rgba(255,255,255,0.9);
+  padding:15px;
+  border-radius:12px;
+  margin-top:10px;
+  color:#111;
+}
+
+.blue{border-left:6px solid #007bff}
+.green{border-left:6px solid #28a745}
+.red{border-left:6px solid #dc3545}
+.orange{border-left:6px solid orange}
+.hidden{display:none}
+pre{white-space:pre-wrap;font-family:inherit}
+
+label{font-size:13px;margin-top:10px;display:block;color:#e2e8f0}
+
+.logout-btn{
+  background:#ef4444;
+  color:white;
+  padding:6px 12px;
+  border:none;
+  border-radius:8px;
+  font-size:12px;
+  cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -85,30 +231,206 @@ body{
 </div>
 
 <div class="container" id="app">
-  <h1>Berhasil Masuk! 🎉</h1>
-  <p>Kalau ini muncul, berarti login udah bener.</p>
-  <button onclick="logout()" style="margin-top:20px;padding:10px 20px;background:#ef4444;color:white;border:none;border-radius:8px;">Logout</button>
+  <div class="app-header">
+    <div>
+      <h3>Halo, Dokter 👋</h3>
+      <p id="todayDate"></p>
+    </div>
+    <div class="avatar">D</div>
+  </div>
+
+  <div class="form-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div class="section-title">🦷 Buat Resep</div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    
+    <label>Mode Pasien</label>
+    <select id="mode" onchange="toggleBB()">
+      <option value="dewasa">Dewasa</option>
+      <option value="anak">Anak</option>
+    </select>
+
+    <label>Berat Badan (Mode Pasien Anak)</label>
+    <input id="bb" class="hidden" placeholder="Contoh: 20 (Kg)">
+
+    <label>Kategori Obat</label>
+    <select id="kategori">
+      <option value="analgesik">Analgesik</option>
+      <option value="antibiotik">Antibiotik</option>
+      <option value="lain">Lain-lain</option>
+    </select>
+
+    <label>Pilih Obat</label>
+    <select id="obat"></select>
+
+    <button onclick="run()" class="btn-primary">PROSES</button>
+    
+    <div class="quick-actions">
+      <button class="btn-secondary" onclick="copyResep()">📋 Salin Resep</button>
+      <button class="btn-secondary" onclick="resetForm()">🔄 Reset</button>
+    </div>
+  </div>
+
+  <div id="out"></div>
 </div>
 
 <script>
+const data = {
+analgesik: ["Paracetamol","Ibuprofen","Mefenamic Acid","Diclofenac K","Ketorolac","Tramadol"],
+antibiotik: ["Amoxicillin","Amoxiclav","Cefadroxil","Cefixime","Clindamycin","Metronidazole","Azithromycin"],
+lain: ["Metylprednisolone","Omeprazole"]
+};
+
+let currentResep = "";
+
+function setDate(){
+  const days=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  const months=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const d=new Date();
+  document.getElementById('todayDate').innerText=`${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
 function login(){
   let user = document.getElementById("user").value;
   let pass = document.getElementById("pass").value;
   
-  if(user === "dokter" && pass === "dokter24"){
-    document.getElementById("login").style.display = "none";
-    document.getElementById("app").style.display = "block";
-  } else {
-    document.getElementById("error").innerText = "Username atau password salah!";
+  if(user==="dokter" && pass==="dokter24"){
+    document.getElementById("login").style.display="none";
+    document.getElementById("app").style.display="block";
+    setDate();
+    loadObat();
+  }else{
+    document.getElementById("error").innerText="Username atau password salah!";
   }
 }
 
 function logout(){
-  document.getElementById("login").style.display = "flex";
-  document.getElementById("app").style.display = "none";
-  document.getElementById("user").value = "";
-  document.getElementById("pass").value = "";
-  document.getElementById("error").innerText = "";
+  document.getElementById("login").style.display="flex";
+  document.getElementById("app").style.display="none";
+  document.getElementById("user").value="";
+  document.getElementById("pass").value="";
+  document.getElementById("error").innerText="";
+}
+
+function toggleBB(){
+  let mode=document.getElementById("mode").value;
+  let bb=document.getElementById("bb");
+  mode=="anak"? bb.classList.remove("hidden") : bb.classList.add("hidden");
+}
+
+function loadObat(){
+  let kat=document.getElementById("kategori").value;
+  let select=document.getElementById("obat");
+  select.innerHTML="";
+  data[kat].forEach(o=>{
+    let opt=document.createElement("option");
+    opt.text=o;
+    select.add(opt);
+  });
+}
+
+document.getElementById("kategori").addEventListener("change",loadObat);
+
+function run(){
+  let mode=document.getElementById("mode").value;
+  let bb=parseFloat(document.getElementById("bb").value||0);
+  let obat=document.getElementById("obat").value;
+  let dosis="",resep="",indikasi="",kontra="",merk="",kie="";
+
+  const dewasa={
+    "Paracetamol":["500 mg 3-4x","R/ Paracetamol 500 mg\nS: 3 dd 1","Nyeri ringan","Hati","Sanmol","Boleh sebelum/sesudah makan"],
+    "Ibuprofen":["400 mg 3x","R/ Ibuprofen 400 mg\nS: 3 dd 1 p.c","Inflamasi","Gastritis","Proris","Setelah makan"],
+    "Mefenamic Acid":["500 mg 3x","R/ Mefenamic acid 500 mg\nS: 3 dd 1","Nyeri sedang","Gastritis","Ponstan","Jangan saat perut kosong"],
+    "Diclofenac K":["50 mg 2-3x","R/ Diclofenac K 50 mg\nS: 2 dd 1","Nyeri kuat","Ulkus","Cataflam","Setelah makan"],
+    "Ketorolac":["10 mg 3x","R/ Ketorolac 10 mg\nS: 3 dd 1","Nyeri berat","Ginjal","Toradol","Max 5 hari"],
+    "Tramadol":["50 mg 2-3x","R/ Tramadol 50 mg\nS: 2 dd 1","Nyeri berat","Ketergantungan","Tramal","Mengantuk"],
+    "Amoxicillin":["500 mg 3x","R/ Amoxicillin 500 mg\nS: 3 dd 1","Infeksi","Alergi","Amoxil","Habiskan"],
+    "Amoxiclav":["625 mg 3x","R/ Amoxiclav 625 mg\nS: 3 dd 1","Infeksi berat","Alergi","Augmentin","Setelah makan"],
+    "Cefadroxil":["500 mg 2x","R/ Cefadroxil 500 mg\nS: 2 dd 1","Infeksi","Alergi","Duricef","Habiskan"],
+    "Cefixime":["200 mg 2x","R/ Cefixime 200 mg\nS: 2 dd 1","Infeksi berat","Alergi","Suprax","Habiskan"],
+    "Clindamycin":["300 mg 3x","R/ Clindamycin 300 mg\nS: 3 dd 1","Alergi penisilin","Diare","Dalacin","Stop jika diare"],
+    "Metronidazole":["500 mg 3x","R/ Metronidazole 500 mg\nS: 3 dd 1","Anaerob","Alkohol","Flagyl","Tidak boleh alkohol"],
+    "Azithromycin":["500 mg 1x","R/ Azithromycin 500 mg\nS: 1 dd 1","Alternatif","Hati","Zithromax","Sebelum makan"],
+    "Metylprednisolone":["4 mg 3x","R/ Metylprednisolone 4 mg\nS: 3 dd 1","Inflamasi","Infeksi aktif","Medrol","Jangka pendek"],
+    "Omeprazole":["20 mg 1x","R/ Omeprazole 20 mg\nS: 1 dd 1 a.c","Gastritis","Hipersensitif","Losec","Sebelum makan"]
+  };
+
+  const maxBB=40;
+  if(mode=="anak"&&bb>0){
+    let w=bb>maxBB?maxBB:bb;
+    let over=bb>maxBB;
+    const anak={
+      "Paracetamol":[(w*0.5).toFixed(1)+" mL","R/ Paracetamol syr\nS: 3 dd "+(w*0.5).toFixed(1)+" mL","Demam","Hati","Sanmol Syr",""],
+      "Ibuprofen":[(w*0.25).toFixed(1)+" mL","R/ Ibuprofen syr\nS: 3 dd "+(w*0.25).toFixed(1)+" mL","Nyeri","Gastritis","Proris Syr","Setelah makan"],
+      "Amoxicillin":[(w*0.4).toFixed(1)+" mL","R/ Amoxicillin syr\nS: 3 dd "+(w*0.4).toFixed(1)+" mL","Infeksi","Alergi","Amoxil Syr","Habiskan"],
+      "Cefadroxil":[(w*0.6).toFixed(1)+" mL","R/ Cefadroxil syr\nS: 2 dd "+(w*0.6).toFixed(1)+" mL","Infeksi","Alergi","Duricef Syr","Habiskan"],
+      "Metronidazole":[(w*0.3).toFixed(1)+" mL","R/ Metronidazole syr\nS: 3 dd "+(w*0.3).toFixed(1)+" mL","Anaerob","Alkohol","Flagyl Syr","Hindari alkohol"]
+    };
+    if(anak[obat]){
+      [dosis,resep,indikasi,kontra,merk,kie]=anak[obat];
+      if(over)kie="BB > 40 kg → gunakan dosis maksimal anak";
+    }else{
+      dosis="-";resep="-";indikasi="-";kontra="-";merk="-";kie="Tidak dianjurkan untuk anak";
+    }
+  }
+  if(mode=="dewasa"&&dewasa[obat]){
+    [dosis,resep,indikasi,kontra,merk,kie]=dewasa[obat];
+  }
+  
+  currentResep=resep;
+  
+  document.getElementById("out").innerHTML=`
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab(event,'dosis')">Dosis</button>
+    <button class="tab-btn" onclick="showTab(event,'resep')">Resep</button>
+    <button class="tab-btn" onclick="showTab(event,'kie')">KIE</button>
+    <button class="tab-btn" onclick="showTab(event,'info')">Info</button>
+  </div>
+  <div id="tab-dosis" class="tab-content active">
+    <div class="card blue"><b>Dosis:</b><br>${dosis}</div>
+  </div>
+  <div id="tab-resep" class="tab-content">
+    <div class="card green"><b>Resep:</b><pre>${resep}</pre></div>
+  </div>
+  <div id="tab-kie" class="tab-content">
+    <div class="card orange"><b>NB (KIE):</b><br>${kie}</div>
+  </div>
+  <div id="tab-info" class="tab-content">
+    <div class="card green"><b>Indikasi:</b><br>${indikasi}</div>
+    <div class="card red"><b>Kontraindikasi:</b><br>${kontra}</div>
+    <div class="card blue"><b>Merk:</b><br>${merk}</div>
+  </div>
+  `;
+}
+
+function showTab(e,tabName){
+  document.querySelectorAll('.tab-content').forEach(tab=>{
+    tab.classList.remove('active');
+  });
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.classList.remove('active');
+  });
+  document.getElementById('tab-'+tabName).classList.add('active');
+  e.target.classList.add('active');
+}
+
+function copyResep(){
+  if(!currentResep){
+    alert('Belum ada resep. Klik PROSES dulu.');
+    return;
+  }
+  navigator.clipboard.writeText(currentResep);
+  event.target.innerText='✅ Tersalin!';
+  setTimeout(()=>{
+    event.target.innerText='📋 Salin Resep';
+  },2000);
+}
+
+function resetForm(){
+  document.getElementById("bb").value="";
+  document.getElementById("out").innerHTML="";
+  currentResep="";
 }
 </script>
 </body>
