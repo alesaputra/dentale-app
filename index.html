@@ -9,10 +9,9 @@
 body{
   font-family:'Inter',Arial,sans-serif;
   min-height:100vh;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(74,179,230,0.15), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(99,102,241,0.15), transparent 40%),
-    linear-gradient(135deg, #EAF6FB, #DFF2FF);
+
+  background: linear-gradient(135deg, #F0F8FF, #E0F2FE, #BAE6FD);
+  background-attachment: fixed;
 }
 
 #login{
@@ -96,11 +95,18 @@ body{
 
 #error{color:#ef4444;font-size:14px;min-height:20px;margin-bottom:8px}
 
-.container{display:none;max-width:520px;margin:auto;color:white;padding:20px;padding-top:0}
+.container{
+  display:none;
+  max-width:520px;
+  margin:auto;
+  color:#334155;
+  padding:20px;
+}
 
 .app-header{
   background:#FFFFFF;
-  color:#1E293B;
+  backdrop-filter:none;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
 
 .app-header h3{font-size:18px;font-weight:600;margin-bottom:2px}
@@ -120,12 +126,13 @@ body{
 .form-box{
   background:#FFFFFF;
   backdrop-filter:none;
+  box-shadow:0 6px 20px rgba(0,0,0,0.05);
 }
 
 .section-title{
   font-size:14px;
   font-weight:600;
-  color:#e2e8f0;
+  color:#1E293B;
   margin-bottom:12px;
   display:flex;
   align-items:center;
